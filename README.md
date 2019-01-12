@@ -1,4 +1,4 @@
-# acrawler
+# sspider (simple spider)
 
 ### Precondition
 
@@ -26,8 +26,10 @@
 2. Django
 3. rq(简单易用)
 
-异步框架将主要采用gevent，没办法，太香了
+项目主要基于：
 
+1. gevent
+2. requests
 
 ### Architecture
 
