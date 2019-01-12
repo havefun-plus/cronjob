@@ -1,7 +1,6 @@
 import logging
-from collections import OrderedDict
-
 import socket
+from collections import OrderedDict
 
 LOGGER = logging.getLogger(__name__)
 

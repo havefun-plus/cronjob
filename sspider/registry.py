@@ -4,9 +4,9 @@ from operator import attrgetter
 
 from redis.exceptions import WatchError
 
-from sspider.utils.loaders import walk_modules, iter_spider_classes
-from sspider.settings import settings
 from sspider.connection import connection
+from sspider.settings import settings
+from sspider.utils.loaders import iter_spider_classes, walk_modules
 
 LOGGER = logging.getLogger(__name__)
 
