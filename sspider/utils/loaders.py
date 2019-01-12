@@ -1,10 +1,12 @@
 import inspect
+from importlib import import_module
+from pkgutil import iter_modules
 from types import ModuleType
 from typing import Iterable, Type
-from pkgutil import iter_modules
-from importlib import import_module
 
 from sspider.core.spiders import BaseSpider
+
+
 """
     scrapy
     ~~~~~~~~~~~~~~

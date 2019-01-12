@@ -1,10 +1,10 @@
-import time
-import sched
 import logging
+import sched
 import threading
+import time
 
-from sspider.registry import Registry
 from sspider.queue import Queue
+from sspider.registry import Registry
 
 LOGGER = logging.getLogger(__name__)
 

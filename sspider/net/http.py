@@ -1,12 +1,12 @@
+import gevent
 from gevent import monkey  # noqa
 monkey.patch_all(thread=False, select=False)  # noqa
 
 import logging
-from typing import Optional
 from functools import partial
+from typing import Optional
 
-import gevent
-from requests import Session, Response
+from requests import Response, Session
 from requests.exceptions import RequestException
 
 from sspider.settings import settings
