@@ -1,6 +1,6 @@
 # acrawler
 
-### precondition
+### Precondition
 
 现在公司爬虫平台基于scrapy和scrapyd构建，使用过程中的痛点主要有：
 
@@ -28,7 +28,8 @@
 
 异步框架将主要采用gevent，没办法，太香了
 
-______### 架构
+
+### Architecture
 
 主从架构，之间利用redis进行通信(参考`rq`)
 
