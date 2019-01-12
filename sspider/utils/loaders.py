@@ -4,8 +4,7 @@ from typing import Iterable, Type
 from pkgutil import iter_modules
 from importlib import import_module
 
-from core.spiders import BaseSpider
-from settings import settings
+from sspider.core.spiders import BaseSpider
 """
     scrapy
     ~~~~~~~~~~~~~~
@@ -48,13 +47,7 @@ def walk_modules(path: str) -> Iterable[ModuleType]:
     return mods
 
 
-def get_all_spiders() -> Iterable[Type]:
-    for module in walk_modules(settings.SPIDER_MODULES):
-        for cls in iter_spider_classes(module):
-            yield cls
-
-
-def load_object(path):
+def load_object(path: str):
     try:
         dot = path.rindex('.')
     except ValueError:

@@ -16,15 +16,33 @@ RETRY_HTTP_CODE = [429]
 # 是否需要更换user agent
 ENABLE_REPLACE_USER_AGENT = True
 
+# 爬虫所在路径
+SPIDERS_MODULE = 'spiders'
+
+# redis 配置
+
+REDIS_SETTINGS = dict(
+    host='0.0.0.0',
+    port=6379,
+    db=0,
+    password=None,
+)
+
 LOGGING_SETTINGS = dict(
     version=1,
     formatters={
         'default': {
-            '()': 'utils.utils.Formatter',
+            '()': 'core.utils.utils.Formatter',
             'format':
             '[{asctime}][{levelname}][{module}][{funcName}]: {message}',
             'style': '{'
         },
+        'spider': {
+            '()': 'core.utils.utils.Formatter',
+            'format':
+            '[{asctime}][{levelname}][{spider}][{funcName}]: {message}',
+            'style': '{'
+        }
     },
     handlers={
         'stdout': {
@@ -32,11 +50,20 @@ LOGGING_SETTINGS = dict(
             'level': 'DEBUG',
             'formatter': 'default',
         },
+        'spider': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'spider',
+        },
     },
     loggers={
         'core': {
             'handlers': ['stdout'],
             'level': 'DEBUG',
+        },
+        'BaseSpider': {
+            'handlers': ['spider'],
+            'level': 'INFO',
         },
     },
 )

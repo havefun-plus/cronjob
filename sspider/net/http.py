@@ -9,9 +9,9 @@ import gevent
 from requests import Session, Response
 from requests.exceptions import RequestException
 
-from settings import settings
-from utils.spider import load_object
-from utils.user_agents import replace_user_agent
+from sspider.settings import settings
+from sspider.utils.loaders import load_object
+from sspider.utils.user_agents import replace_user_agent
 
 LOGGER = logging.getLogger(__name__)
 
