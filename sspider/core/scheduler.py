@@ -36,8 +36,14 @@ class Scheduler:
         if spider_cls.need_schedule():
             self.queue.enqueue(spider_cls.registry_key)
 
+    def _run(self):
+        while True:
+            try:
+                self.schedule_all()
+                self._scheduler.run()
+            except Exception:
+                time.sleep(1)
+
     def run(self):
-        self.schedule_all()
-        t = threading.Thread(target=self._scheduler.run)
+        t = threading.Thread(target=self._run)
         t.start()
-        t.join()
