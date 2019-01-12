@@ -1,6 +1,6 @@
 import logging
 
-from net import http
+from sspider.net import http
 
 
 class SpiderError(Exception):
@@ -8,14 +8,19 @@ class SpiderError(Exception):
 
 
 class BaseSpider:
-    timer = ''
+    key = 'sspider:spider:'
+    schedule = ''
+    priority = 0
 
-    def __init__(self, article: dict) -> None:
-        self.article = article
+    def __init__(self, *args, **kwargs):
         self.http = http
 
     def start_requests(self):
         raise NotImplementedError
+
+    @classmethod
+    def registry_key(cls):
+        return f'{cls.key}{cls.__name__}'
 
     @property
     def logger(self):
