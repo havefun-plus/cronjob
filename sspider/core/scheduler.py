@@ -52,3 +52,7 @@ class Scheduler:
     def run(self):
         t = threading.Thread(target=self._run)
         t.start()
+
+    def restart(self):
+        # TODO
+        pass

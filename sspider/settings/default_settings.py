@@ -28,6 +28,12 @@ REDIS_SETTINGS = dict(
     password=None,
 )
 
+# gevent worker queue size
+DEFAULT_WORKER_QUEUE_SIZE = 100
+
+DEFAULT_PRODUCTER_NUMBER = 2
+DEFAULT_CONSUMER_NUMBER = 8
+
 LOGGING_SETTINGS = dict(
     version=1,
     formatters={
