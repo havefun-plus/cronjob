@@ -2,6 +2,7 @@ import logging
 import sched
 import threading
 import time
+import traceback
 
 from sspider.queue import Queue
 from sspider.registry import Registry
@@ -34,6 +35,7 @@ class Scheduler:
 
     def schedule(self, spider_cls):
         if spider_cls.need_schedule():
+            # TODO handler enqueue failed
             self.queue.enqueue(spider_cls.registry_key)
 
     def _run(self):
@@ -42,7 +44,10 @@ class Scheduler:
                 self.schedule_all()
                 self._scheduler.run()
             except Exception:
+                LOGGER.error('scheduler error')
+                traceback.print_exc()
                 time.sleep(1)
+            LOGGER.error('scheduler stop')
 
     def run(self):
         t = threading.Thread(target=self._run)
