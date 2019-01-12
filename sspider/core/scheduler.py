@@ -1,6 +1,5 @@
 import logging
 import sched
-import threading
 import time
 import traceback
 
@@ -11,10 +10,17 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Scheduler:
-    def __init__(self):
-        self.registry = Registry()
-        self.queue = Queue.from_settings()
+    def __init__(self, registry, queue):
+        self.registry = registry
+        self.queue = queue
         self._scheduler = sched.scheduler(time.time, time.sleep)
+
+    @classmethod
+    def from_settings(cls):
+        return cls(
+            registry=Registry.from_settings(),
+            queue=Queue.from_settings(),
+        )
 
     def periodic(self, func, spider_cls):
         if not spider_cls.canceled:
@@ -39,19 +45,18 @@ class Scheduler:
             self.queue.enqueue(spider_cls.registry_key)
 
     def _run(self):
-        while True:
-            try:
-                self.schedule_all()
-                self._scheduler.run()
-            except Exception:
-                LOGGER.error('scheduler error')
-                traceback.print_exc()
-                time.sleep(1)
-            LOGGER.error('scheduler stop')
+        try:
+            self.schedule_all()
+            self._scheduler.run()
+        except Exception:
+            LOGGER.error('scheduler error')
+            traceback.print_exc()
+            time.sleep(1)
+        LOGGER.error('scheduler stop')
 
     def run(self):
-        t = threading.Thread(target=self._run)
-        t.start()
+        while True:
+            self._run()
 
     def restart(self):
         # TODO
