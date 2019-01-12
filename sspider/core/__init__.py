@@ -1,5 +1,5 @@
 from logging.config import dictConfig
 
-from settings import settings
+from sspider.settings import settings
 
-dictConfig(settings.logging_config)
+dictConfig(settings.LOGGING_SETTINGS)

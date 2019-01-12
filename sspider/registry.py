@@ -17,7 +17,7 @@ class Registry:
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
-            cls._instance = super().__new__(*args, **kwargs)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self, module: str, connection):
@@ -96,7 +96,7 @@ class Registry:
         raise AttributeError
 
     def __iter__(self):
-        workings = self.connection.sismember(self.working_key)
+        workings = self.connection.smembers(self.working_key)
         for spider_rk in workings:
             if not self.isdeleted(spider_rk):
                 yield spider_rk
