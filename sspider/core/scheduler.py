@@ -37,6 +37,7 @@ class Scheduler:
             self.queue.enqueue(spider_cls.registry_key)
 
     def run(self):
+        self.schedule_all()
         t = threading.Thread(target=self._scheduler.run)
         t.start()
         t.join()
