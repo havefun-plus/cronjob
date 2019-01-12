@@ -41,13 +41,13 @@ LOGGING_SETTINGS = dict(
     version=1,
     formatters={
         'default': {
-            '()': 'core.utils.utils.Formatter',
+            '()': 'sspider.utils.utils.Formatter',
             'format':
             '[{asctime}][{levelname}][{module}][{funcName}]: {message}',
             'style': '{'
         },
         'spider': {
-            '()': 'core.utils.utils.Formatter',
+            '()': 'sspider.utils.utils.Formatter',
             'format':
             '[{asctime}][{levelname}][{spider}][{funcName}]: {message}',
             'style': '{'
