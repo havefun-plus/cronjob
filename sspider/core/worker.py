@@ -3,72 +3,34 @@ import traceback
 
 import gevent
 from gevent.queue import Empty
-from gevent.queue import Queue as TaskQueue
 
-from sspider.queue import DequeueTimeout, Queue
-from sspider.registry import Registry
 from sspider.settings import settings
+from sspider.tasks import task_queue
+from sspider.tasks.tasks import ProducterTask
 
 LOGGER = logging.getLogger('worker')
 
-tasks = TaskQueue(settings.DEFAULT_WORKER_QUEUE_SIZE)
-
 
 class Worker:
-    def __init__(self, queue: Queue, registry: Registry):
-        self.queue = queue
-        self.registry = registry
-
-    @classmethod
-    def from_settings(cls):
-        return cls(
-            queue=Queue.from_settings(),
-            registry=Registry.from_settings(),
-        )
-
-    def _producter(self):
+    def _work(self):
         try:
-            msg = self.queue.recv()
-        except DequeueTimeout:
+            obj = task_queue.get(timeout=3)
+            obj.run()
+        except Empty:
             pass
-        else:
-            tasks.put(msg)
+        except Exception as err:
+            traceback.print_exc()
+            LOGGER.error(f'Worker error: {err}')
 
-    def producter(self):
+    def work(self):
         while True:
-            try:
-                self._producter()
-                gevent.sleep(1)
-            except Exception as err:
-                traceback.print_exc()
-                LOGGER.error(f'Producter error: {err}')
-
-    def _consumer(self):
-        msg = tasks.get(timeout=3)
-        spider_cls = self.registry[msg]
-        obj = spider_cls()
-        obj.crawl()
-
-    def consumer(self):
-        while True:
-            try:
-                self._consumer()
-                gevent.sleep(1)
-            except Empty:
-                pass
-            except Exception as err:
-                traceback.print_exc()
-                LOGGER.error(f'consumer error: {err}')
+            self._work()
+            gevent.sleep(1)
 
     def close(self):
         pass
 
     def run(self):
-        producters = [
-            self.producter for _ in range(settings.DEFAULT_PRODUCTER_NUMBER)
-        ]
-        consumers = [
-            self.consumer for _ in range(settings.DEFAULT_CONSUMER_NUMBER)
-        ]
-        gevent.joinall(
-            [gevent.spawn(worker) for worker in [*producters, *consumers]])
+        task_queue.put(ProducterTask.from_settings())
+        workers = [self.work for _ in range(settings.DEFAULT_WORKER_NUMBER)]
+        gevent.joinall([gevent.spawn(worker) for worker in workers])

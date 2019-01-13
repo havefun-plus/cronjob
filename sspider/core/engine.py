@@ -16,7 +16,7 @@ class Engine:
     @classmethod
     def from_settings(cls):
         return cls(
-            worker=Worker.from_settings(),
+            worker=Worker(),
             scheduler=Scheduler.from_settings(),
         )
 

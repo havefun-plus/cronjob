@@ -1,12 +1,9 @@
 import inspect
+from typing import Generator
 from importlib import import_module
 from pkgutil import iter_modules
 from types import ModuleType
 from typing import Iterable, Type
-
-from sspider.core.spiders import BaseSpider
-
-
 """
     scrapy
     ~~~~~~~~~~~~~~
@@ -15,14 +12,19 @@ from sspider.core.spiders import BaseSpider
 """
 
 
+def get_all_target_cls(module_path: str, target_cls: type) -> Generator:
+    for module in walk_modules(module_path):
+        yield from iter_target_classes(module, target_cls)
+
+
 # copy from scarpy/utils/spider.py
-def iter_spider_classes(module: ModuleType) -> Type:
+def iter_target_classes(module: ModuleType, target_cls: type) -> Type:
 
     for obj in vars(module).values():
         if inspect.isclass(obj) and \
-           issubclass(obj, BaseSpider) and \
+           issubclass(obj, target_cls) and \
            obj.__module__ == module.__name__ and \
-           not BaseSpider is obj:
+           not target_cls is obj:
             yield obj
 
 
