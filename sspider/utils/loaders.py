@@ -5,6 +5,8 @@ from types import ModuleType
 from typing import Iterable, Type
 
 from sspider.core.spiders import BaseSpider
+
+
 """
     scrapy
     ~~~~~~~~~~~~~~

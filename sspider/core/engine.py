@@ -1,8 +1,9 @@
-from threading import Thread
-from multiprocessing import Process
 import logging
-from sspider.core.worker import Worker
+from multiprocessing import Process
+from threading import Thread
+
 from sspider.core.scheduler import Scheduler
+from sspider.core.worker import Worker
 
 LOGGER = logging.getLogger('engine')
 

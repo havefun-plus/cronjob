@@ -1,5 +1,5 @@
 '''sspider is a simple spider'''
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 from sspider import __version__
 

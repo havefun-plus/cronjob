@@ -5,9 +5,9 @@ import gevent
 from gevent.queue import Empty
 from gevent.queue import Queue as TaskQueue
 
-from sspider.settings import settings
-from sspider.queue import Queue, DequeueTimeout
+from sspider.queue import DequeueTimeout, Queue
 from sspider.registry import Registry
+from sspider.settings import settings
 
 LOGGER = logging.getLogger('worker')
 
