@@ -29,13 +29,10 @@ REDIS_SETTINGS = dict(
 )
 
 # gevent worker queue size
-DEFAULT_WORKER_QUEUE_SIZE = 100
-
-# 每个worker默认生产者的协程数
-DEFAULT_PRODUCTER_NUMBER = 2
+DEFAULT_TASK_QUEUE_SIZE = 100
 
 # 每个worker默认消费者的协程数
-DEFAULT_CONSUMER_NUMBER = 8
+DEFAULT_WORKER_NUMBER = 8
 
 LOGGING_SETTINGS = dict(
     version=1,
@@ -46,11 +43,13 @@ LOGGING_SETTINGS = dict(
             '[{asctime}][{levelname}][{module}][{funcName}]: {message}',
             'style': '{'
         },
-        'spider': {
-            '()': 'sspider.utils.utils.Formatter',
+        'basecls': {
+            '()':
+            'sspider.utils.utils.Formatter',
             'format':
-            '[{asctime}][{levelname}][{spider}][{funcName}]: {message}',
-            'style': '{'
+            '[{asctime}][{levelname}][{basecls}][{funcName}]: {message}',
+            'style':
+            '{'
         }
     },
     handlers={
@@ -59,10 +58,10 @@ LOGGING_SETTINGS = dict(
             'level': 'DEBUG',
             'formatter': 'default',
         },
-        'spider': {
+        'basecls': {
             'class': 'logging.StreamHandler',
             'level': 'DEBUG',
-            'formatter': 'spider',
+            'formatter': 'basecls',
         },
     },
     loggers={
@@ -91,7 +90,11 @@ LOGGING_SETTINGS = dict(
             'level': 'INFO',
         },
         'BaseSpider': {
-            'handlers': ['spider'],
+            'handlers': ['basecls'],
+            'level': 'INFO',
+        },
+        'BaseTask': {
+            'handlers': ['basecls'],
             'level': 'INFO',
         },
     },

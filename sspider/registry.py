@@ -6,8 +6,9 @@ from typing import AnyStr
 from redis.exceptions import WatchError
 
 from sspider.connection import connection
+from sspider.core.spiders import BaseSpider
 from sspider.settings import settings
-from sspider.utils.loaders import iter_spider_classes, walk_modules
+from sspider.utils.loaders import iter_target_classes, walk_modules, get_all_target_cls
 
 LOGGER = logging.getLogger('registry')
 
@@ -37,12 +38,8 @@ class Registry:
             connection=connection,
         )
 
-    def _get_all_spiders(self):
-        for module in walk_modules(self.module):
-            yield from iter_spider_classes(module)
-
     def init_spiders(self):
-        spiders = list(self._get_all_spiders())
+        spiders = list(get_all_target_cls(self.module, BaseSpider))
         spiders.sort(key=attrgetter('priority'))
         for spider_cls in spiders:
             self._spiders[spider_cls.registry_key()] = spider_cls

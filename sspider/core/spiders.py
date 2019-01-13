@@ -26,7 +26,7 @@ class BaseSpider:
     def logger(self):
         logger_name = f'BaseSpider.{type(self).__name__}'
         logger = logging.getLogger(logger_name)
-        return logging.LoggerAdapter(logger, {'spider': type(self).__name__})
+        return logging.LoggerAdapter(logger, {'basecls': type(self).__name__})
 
     def log(self, message, level=logging.DEBUG, **kw):
         self.logger.log(level, message, **kw)
