@@ -70,6 +70,26 @@ LOGGING_SETTINGS = dict(
             'handlers': ['stdout'],
             'level': 'DEBUG',
         },
+        'scheduler': {
+            'handlers': ['stdout'],
+            'level': 'INFO',
+        },
+        'engine': {
+            'handlers': ['stdout'],
+            'level': 'INFO',
+        },
+        'worker': {
+            'handlers': ['stdout'],
+            'level': 'INFO',
+        },
+        'queue': {
+            'handlers': ['stdout'],
+            'level': 'INFO',
+        },
+        'registry': {
+            'handlers': ['stdout'],
+            'level': 'INFO',
+        },
         'BaseSpider': {
             'handlers': ['spider'],
             'level': 'INFO',

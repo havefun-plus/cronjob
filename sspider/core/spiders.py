@@ -15,11 +15,12 @@ class BaseSpider:
     schedule = ''
     priority = 0
     canceled = False
+    last_schedule = datetime.now()
 
     def __init__(self, *args, **kwargs):
         self.http = http
 
-    def start_requests(self):
+    def crawl(self):
         raise NotImplementedError
 
     @property
@@ -37,9 +38,10 @@ class BaseSpider:
 
     @classmethod
     def need_schedule(cls):
-        base = datetime.now()
-        iter_job = croniter(cls.schedule, base)
-        next_job = iter_job.get_next()
-        if next_job.strftime('%Y%m%d%H%M') == base.strftime('%Y%m%d%H%M'):
+        iter_job = croniter(cls.schedule, cls.last_schedule)
+        next_job = iter_job.get_next(datetime)
+        now = datetime.now()
+        if next_job.strftime('%Y%m%d%H%M') == now.strftime('%Y%m%d%H%M'):
+            cls.last_schedule = now
             return True
         return False

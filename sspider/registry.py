@@ -1,6 +1,7 @@
 import logging
 from collections import OrderedDict
 from operator import attrgetter
+from typing import AnyStr
 
 from redis.exceptions import WatchError
 
@@ -8,7 +9,7 @@ from sspider.connection import connection
 from sspider.settings import settings
 from sspider.utils.loaders import iter_spider_classes, walk_modules
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger('registry')
 
 
 class Registry:
@@ -44,7 +45,7 @@ class Registry:
         spiders = list(self._get_all_spiders())
         spiders.sort(key=attrgetter('priority'))
         for spider_cls in spiders:
-            self._spiders[spider_cls.registry_key] = spider_cls
+            self._spiders[spider_cls.registry_key()] = spider_cls
 
     def transaction(self, func, *args):
         pipe = self.connection.pipeline()
@@ -88,7 +89,9 @@ class Registry:
             return False
         return self.connection.sismember(self.working_key, spider_rk)
 
-    def __getitem__(self, spider_rk: str):
+    def __getitem__(self, spider_rk: AnyStr):
+        if isinstance(spider_rk, bytes):
+            spider_rk = spider_rk.decode()
         if not self.isdeleted(spider_rk):
             return self._spiders[spider_rk]
 

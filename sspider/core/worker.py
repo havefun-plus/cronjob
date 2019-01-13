@@ -6,10 +6,10 @@ from gevent.queue import Empty
 from gevent.queue import Queue as TaskQueue
 
 from sspider.settings import settings
-from sspider.queue import Queue
+from sspider.queue import Queue, DequeueTimeout
 from sspider.registry import Registry
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger('worker')
 
 tasks = TaskQueue(settings.DEFAULT_WORKER_QUEUE_SIZE)
 
@@ -27,8 +27,12 @@ class Worker:
         )
 
     def _producter(self):
-        msg = self.queue.recv()
-        tasks.put(msg)
+        try:
+            msg = self.queue.recv()
+        except DequeueTimeout:
+            pass
+        else:
+            tasks.put(msg)
 
     def producter(self):
         while True:

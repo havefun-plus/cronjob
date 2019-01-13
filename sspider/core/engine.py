@@ -1,9 +1,10 @@
-import threading
+from threading import Thread
+from multiprocessing import Process
 import logging
 from sspider.core.worker import Worker
 from sspider.core.scheduler import Scheduler
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger('engine')
 
 
 class Engine:
@@ -26,9 +27,11 @@ class Engine:
         LOGGER.info('worker start...')
         self.worker.run()
 
-    def run_local(self):
-        LOGGER.info('run local mode with thread')
-        worker = threading.Thread(target=self.work)
-        worker.start()
-        scheduler = threading.Thread(target=self.schedule)
+    def run_local(self, process=False, worker_num=1):
+        LOGGER.info(f'run local mode with Process = {process}')
+        Job = Process if process else Thread
+        jobs = [Job(target=self.work) for i in range(worker_num)]
+        for job in jobs:
+            job.start()
+        scheduler = Job(target=self.schedule)
         scheduler.start()
