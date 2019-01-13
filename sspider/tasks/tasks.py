@@ -35,7 +35,7 @@ class ProducterTask(BaseTask):
         except Exception as err:
             self.logger.error(f'error: {err}')
             traceback.print_exc()
-        else:
+        finally:
             self.task_queue.put(self)
 
     def _producter(self):
