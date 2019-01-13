@@ -1,6 +1,6 @@
 import gevent
 from gevent import monkey  # noqa
-monkey.patch_all(thread=False, select=False)  # noqa
+monkey.patch_all(select=False)  # noqa
 
 import logging
 from functools import partial
