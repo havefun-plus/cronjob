@@ -1,5 +1,8 @@
 ### 配置文件
-通过环境变量`SSPIDER_SETTINGS`指定配置文件, 配置见`settings.example.py`
+
+目前需要在项目根目录`export PYTHONPATH=.`
+
+通过环境变量`SSPIDER_SETTINGS`指定配置文件, 配置见`settings.example.py`, 也可不指定使用默认配置
 
 ### 爬虫脚本
 
@@ -18,7 +21,7 @@
 * 启动主节点: `sspider runmaster`
 * 启动从节点: `sspider runworker`
 
-#### 2. 单节点运行
+#### 2. 单节点运行（目前不可用，后续修复）
 
 默认线程模式：
 
