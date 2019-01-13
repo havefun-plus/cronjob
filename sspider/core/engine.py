@@ -33,5 +33,4 @@ class Engine:
         jobs = [Job(target=self.work) for i in range(worker_num)]
         for job in jobs:
             job.start()
-        scheduler = Job(target=self.schedule)
-        scheduler.start()
+        self.schedule()
