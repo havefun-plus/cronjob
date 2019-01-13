@@ -8,7 +8,6 @@ requirements = [
     'Click==7.0',
     'croniter==0.3.26',
     'gevent==1.4.0',
-    'pytest==4.1.1',
     'redis==3.0.1',
     'requests==2.21.0',
 ]
