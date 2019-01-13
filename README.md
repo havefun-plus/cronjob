@@ -44,4 +44,24 @@
 #### 从节点
 
 1. 争抢任务
-2. 实例化化任务
+2. 实例化任务
+
+---
+
+### Installation
+
+当前版本`0.0.1`
+
+```
+pip install git+https://github.com/fucangyu/sspider.git@0.0.1
+```
+
+### Usage
+
+参考`examples`
+
+### TODO
+
+1. spider模板
+2. 监控
+3. proxy
