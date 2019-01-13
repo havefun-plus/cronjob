@@ -21,7 +21,7 @@
 * 启动主节点: `sspider runmaster`
 * 启动从节点: `sspider runworker`
 
-#### 2. 单节点运行（目前不可用，后续修复）
+#### 2. 单节点运行
 
 默认线程模式：
 
@@ -29,6 +29,8 @@
 
 
 进程模式:
+
+mac下可能需要`export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES`
 
 * `sspider runlocal --process`, 一个进程调度，默认一个进程爬取
 
