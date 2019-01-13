@@ -1,9 +1,10 @@
 import inspect
-from typing import Generator
 from importlib import import_module
 from pkgutil import iter_modules
 from types import ModuleType
-from typing import Iterable, Type
+from typing import Generator, Iterable, Type
+
+
 """
     scrapy
     ~~~~~~~~~~~~~~

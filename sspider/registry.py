@@ -8,7 +8,7 @@ from redis.exceptions import WatchError
 from sspider.connection import connection
 from sspider.core.spiders import BaseSpider
 from sspider.settings import settings
-from sspider.utils.loaders import iter_target_classes, walk_modules, get_all_target_cls
+from sspider.utils.loaders import get_all_target_cls
 
 LOGGER = logging.getLogger('registry')
 

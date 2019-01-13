@@ -1,10 +1,9 @@
 import traceback
 
-from sspider.tasks import BaseTask
-from sspider.queue import Queue as RedisQueue
 from sspider.queue import DequeueTimeout
+from sspider.queue import Queue as RedisQueue
 from sspider.registry import Registry
-from sspider.tasks import task_queue
+from sspider.tasks import BaseTask, task_queue
 
 
 class CrawlTask(BaseTask):
