@@ -1,11 +1,11 @@
-import gevent
-from gevent import monkey  # noqa
-monkey.patch_all(select=False)  # noqa
+from gevent import monkey  # isort:skip
+monkey.patch_all(select=False)  # isort:skip
 
 import logging
 from functools import partial
 from typing import Optional
 
+import gevent
 from requests import Response, Session
 from requests.exceptions import RequestException
 
