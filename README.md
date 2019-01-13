@@ -50,10 +50,10 @@
 
 ### Installation
 
-当前版本`0.0.3`
+当前版本`0.0.4`
 
 ```
-pip install git+https://github.com/fucangyu/sspider.git@0.0.3
+pip install git+https://github.com/fucangyu/sspider.git@0.0.4
 ```
 
 ### Usage
