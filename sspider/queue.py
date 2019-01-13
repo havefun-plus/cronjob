@@ -1,8 +1,13 @@
+import logging
 from redis.exceptions import WatchError
 
 from sspider.connection import connection
 
-# TODO ack
+LOGGER = logging.getLogger('queue')
+
+
+class DequeueTimeout(Exception):
+    pass
 
 
 class Queue:
@@ -26,13 +31,18 @@ class Queue:
             pipe.execute()
             return True
         except WatchError:
+            LOGGER.error('watch error')
             return False
 
     def recv(self, timeout=3):
-        return self.connection.blpop(
+        msg = self.connection.blpop(
             self.registry_key,
             timeout=timeout,
         )
+        if not msg:
+            raise DequeueTimeout
+        _, spider_rk = msg
+        return spider_rk.decode()
 
     def ack(self):
         # TODO

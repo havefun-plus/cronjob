@@ -6,7 +6,7 @@ import traceback
 from sspider.queue import Queue
 from sspider.registry import Registry
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger('scheduler')
 
 
 class Scheduler:
@@ -24,7 +24,6 @@ class Scheduler:
 
     def periodic(self, func, spider_cls):
         if not spider_cls.canceled:
-            LOGGER.debug(f'schedule {spider_cls.__name__}')
             self._scheduler.enter(
                 60,  # interval
                 99,  # priority
@@ -42,7 +41,8 @@ class Scheduler:
     def schedule(self, spider_cls):
         if spider_cls.need_schedule():
             # TODO handler enqueue failed
-            self.queue.enqueue(spider_cls.registry_key)
+            LOGGER.info(f'schedule {spider_cls.__name__}')
+            self.queue.enqueue(spider_cls.registry_key())
 
     def _run(self):
         try:
@@ -52,7 +52,7 @@ class Scheduler:
             LOGGER.error('scheduler error')
             traceback.print_exc()
             time.sleep(1)
-        LOGGER.error('scheduler stop')
+        # LOGGER.error('scheduler stop')
 
     def run(self):
         while True:
