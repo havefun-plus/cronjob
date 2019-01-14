@@ -55,7 +55,6 @@ class Registry:
                 return
             except WatchError:
                 LOGGER.debug(f'watch error {args}')
-                pass
 
     def delete(self, spider_rk: str):
         self.transaction(self._delete, spider_rk)
@@ -74,7 +73,7 @@ class Registry:
         pipe.srem(self.deleted_key, spider_rk)
 
     def isdeleted(self, spider_rk: str):
-        self.connection.sismember(self.deleted_key, spider_rk)
+        return self.connection.sismember(self.deleted_key, spider_rk)
 
     def persist(self):
         for key, spider_cls in self._spiders.items():

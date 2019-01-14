@@ -67,7 +67,7 @@ LOGGING_SETTINGS = dict(
     loggers={
         'core': {
             'handlers': ['stdout'],
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
         'scheduler': {
             'handlers': ['stdout'],
@@ -95,7 +95,7 @@ LOGGING_SETTINGS = dict(
         },
         'BaseTask': {
             'handlers': ['basecls'],
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
     },
 )
