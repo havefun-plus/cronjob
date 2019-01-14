@@ -1,8 +1,8 @@
 # 是否使用代理
-ENABLE_PROXY = False
+ENABLE_PROXY = True
 
 # proxy class
-PROXY_CLASS = 'net.proxy.DefaultProxy'
+PROXY_CLASS = 'spiders.proxy.IterProxy'
 
 # 爬取失败或者http code错误时候需要重试的次数
 RETRY_TIMES = 10
