@@ -6,7 +6,7 @@ from gevent.queue import Empty
 
 from sspider.settings import settings
 from sspider.tasks import task_queue
-from sspider.tasks.tasks import ProducterTask
+from sspider.tasks.tasks import ProducerTask
 
 LOGGER = logging.getLogger('worker')
 
@@ -31,6 +31,6 @@ class Worker:
         pass
 
     def run(self):
-        task_queue.put(ProducterTask.from_settings())
+        task_queue.put(ProducerTask.from_settings())
         workers = [self.work for _ in range(settings.DEFAULT_WORKER_NUMBER)]
         gevent.joinall([gevent.spawn(worker) for worker in workers])

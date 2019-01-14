@@ -30,7 +30,6 @@ class Scheduler:
                 self.periodic,
                 (func, spider_cls),
             )
-
             func(spider_cls)
 
     def schedule_all(self):

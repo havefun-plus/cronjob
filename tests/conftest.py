@@ -1,12 +1,12 @@
 import pytest
-import fakeredis
+
+from tests.helpers import fake_connection
 
 
 @pytest.fixture(autouse=True)
 def connection(mocker):
-    conn = fakeredis.FakeStrictRedis()
-    mocker.patch('sspider.connection.connection', conn)
-    return conn
+    mocker.patch('sspider.connection.connection', fake_connection)
+    return fake_connection
 
 
 @pytest.fixture

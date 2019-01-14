@@ -9,6 +9,6 @@ clean:
 	find . -iname "*.pyc" | xargs rm -rf
 
 test:
-	PYTHONPATH=. pytest -s -vvvv --cov sspider --cov-report term-missing --cov-report xml:cobertura.xml --junitxml=testresult.xml .
+	PYTHONPATH=. pytest -s -vvvv --cov sspider --cov tests --cov-report term-missing --cov-report xml:cobertura.xml --junitxml=testresult.xml .
 
 

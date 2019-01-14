@@ -67,35 +67,35 @@ LOGGING_SETTINGS = dict(
     loggers={
         'core': {
             'handlers': ['stdout'],
-            'level': 'ERROR',
+            'level': 'INFO',
         },
         'scheduler': {
             'handlers': ['stdout'],
-            'level': 'ERROR',
+            'level': 'INFO',
         },
         'engine': {
             'handlers': ['stdout'],
-            'level': 'ERROR',
+            'level': 'INFO',
         },
         'worker': {
             'handlers': ['stdout'],
-            'level': 'ERROR',
+            'level': 'INFO',
         },
         'queue': {
             'handlers': ['stdout'],
-            'level': 'ERROR',
+            'level': 'INFO',
         },
         'registry': {
             'handlers': ['stdout'],
-            'level': 'ERROR',
+            'level': 'INFO',
         },
         'BaseSpider': {
             'handlers': ['basecls'],
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
         'BaseTask': {
             'handlers': ['basecls'],
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
     },
 )
