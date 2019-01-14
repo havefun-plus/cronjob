@@ -14,6 +14,11 @@
 3. 发送请求建议使用`self.http`, 也可以使用`requests`, 这样的话会有一些配置失效, 比如重试， 代理。`self.http`返回的也是`requests.Response`
 2. 打印日志最好使用`self.logger`或者`self.log`
 
+### 使用代理
+
+继承`from sspider.net.proxy import BaseProxy`, 实现`get_proxy_ips`方法，返回可迭代的代理`ip`, 参考`example.proxy.Iterproxy`， 也可以直接实现`get`方法，每次返回一次`ip`
+
+
 ### 启动
 
 #### 1. 主从运行

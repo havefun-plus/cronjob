@@ -10,14 +10,15 @@ from requests import Response, Session
 from requests.exceptions import RequestException
 
 from sspider.settings import settings
-# from sspider.utils.loaders import load_object
+from sspider.utils.loaders import load_object
 from sspider.utils.user_agents import replace_user_agent
 
 LOGGER = logging.getLogger(__name__)
 
-# if settings.ENABLE_PROXY:
-#     proxy_cls = load_object(settings.PROXY_CLASS)
-#     proxy_obj = proxy_cls()
+if settings.ENABLE_PROXY:
+    LOGGER.info('loading proxy')
+    proxy_cls = load_object(settings.PROXY_CLASS)
+    proxy_obj = proxy_cls()
 
 
 def request(method: str, url: str, **kwargs) -> Optional[Response]:

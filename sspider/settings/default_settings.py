@@ -2,7 +2,7 @@
 ENABLE_PROXY = False
 
 # proxy class
-PROXY_CLASS = 'net.proxy.DefaultProxy'
+PROXY_CLASS = 'spiders.proxy.IterProxy'
 
 # 爬取失败或者http code错误时候需要重试的次数
 RETRY_TIMES = 10

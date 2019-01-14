@@ -35,9 +35,9 @@ class ProducerTask(BaseTask):
         except Exception:
             raise
         finally:
-            self.again()
+            self.repeat()
 
-    def again(self):
+    def repeat(self):
         self.task_queue.put(self)
 
     def _run(self):
