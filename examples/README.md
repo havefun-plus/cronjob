@@ -16,7 +16,8 @@
 
 ### 使用代理
 
-继承`from sspider.net.proxy import BaseProxy`, 实现`get_proxy_ips`方法，返回可迭代的代理`ip`, 参考`example.proxy.Iterproxy`， 也可以直接实现`get`方法，每次返回一次`ip`
+1. 继承`from sspider.net.proxy import BaseProxy`, 实现`get_proxy_ips`方法，返回可迭代的代理`ip`, 参考`example.proxy.Iterproxy`， 也可以直接实现`get`方法，每次返回一次`ip`
+2. 在配置文件中指定代理类`PROXY_CLASS`
 
 
 ### 启动
