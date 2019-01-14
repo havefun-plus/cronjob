@@ -1,4 +1,4 @@
-from tests.spiders.spiders import TestSpider
+from tests.spiders.spiders import ForTestSpider
 
 
 def test_singleton(mocker, connection):
@@ -16,7 +16,7 @@ def test_crud(connection):
 
     # test exists
     assert test_sp_rk in registry
-    assert registry[test_sp_rk] is TestSpider
+    assert registry[test_sp_rk] is ForTestSpider
     assert not registry.isdeleted(test_sp_rk)
 
     # test delete

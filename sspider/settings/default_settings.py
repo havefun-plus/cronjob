@@ -87,7 +87,7 @@ LOGGING_SETTINGS = dict(
         },
         'registry': {
             'handlers': ['stdout'],
-            'level': 'INFO',
+            'level': 'ERROR',
         },
         'BaseSpider': {
             'handlers': ['basecls'],
