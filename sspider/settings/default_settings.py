@@ -1,3 +1,7 @@
+# log level
+
+LOG_LEVEL = 'ERROR'
+
 # 是否使用代理
 ENABLE_PROXY = False
 
@@ -30,72 +34,3 @@ REDIS_SETTINGS = dict(
 
 # gevent worker queue size
 DEFAULT_TASK_QUEUE_SIZE = 100
-
-# 每个worker默认消费者的协程数
-DEFAULT_WORKER_NUMBER = 8
-
-LOGGING_SETTINGS = dict(
-    version=1,
-    formatters={
-        'default': {
-            '()': 'sspider.utils.utils.Formatter',
-            'format':
-            '[{asctime}][{levelname}][{module}][{funcName}]: {message}',
-            'style': '{'
-        },
-        'basecls': {
-            '()':
-            'sspider.utils.utils.Formatter',
-            'format':
-            '[{asctime}][{levelname}][{basecls}][{funcName}]: {message}',
-            'style':
-            '{'
-        }
-    },
-    handlers={
-        'stdout': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
-            'formatter': 'default',
-        },
-        'basecls': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
-            'formatter': 'basecls',
-        },
-    },
-    loggers={
-        'core': {
-            'handlers': ['stdout'],
-            'level': 'INFO',
-        },
-        'scheduler': {
-            'handlers': ['stdout'],
-            'level': 'INFO',
-        },
-        'engine': {
-            'handlers': ['stdout'],
-            'level': 'INFO',
-        },
-        'worker': {
-            'handlers': ['stdout'],
-            'level': 'INFO',
-        },
-        'queue': {
-            'handlers': ['stdout'],
-            'level': 'INFO',
-        },
-        'registry': {
-            'handlers': ['stdout'],
-            'level': 'INFO',
-        },
-        'BaseSpider': {
-            'handlers': ['basecls'],
-            'level': 'INFO',
-        },
-        'BaseTask': {
-            'handlers': ['basecls'],
-            'level': 'DEBUG',
-        },
-    },
-)

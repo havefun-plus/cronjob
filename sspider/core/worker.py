@@ -2,6 +2,7 @@ import logging
 import traceback
 
 import gevent
+from gevent import Greenlet
 from gevent.queue import Empty
 
 from sspider.settings import settings
@@ -11,26 +12,24 @@ from sspider.tasks.tasks import ProducerTask
 LOGGER = logging.getLogger('worker')
 
 
-class Worker:
-    def _work(self):
-        try:
-            obj = task_queue.get(timeout=3)
-            obj.run()
-        except Empty:
-            pass
-        except Exception as err:
-            traceback.print_exc()
-            LOGGER.error(f'Worker error: {err}')
+class Worker(Greenlet):
+    def __init__(self, n=0):
+        Greenlet.__init__(self)
+        self.n = n
 
-    def work(self):
+    def _run(self):
+        task_queue.put(ProducerTask.from_settings())
         while True:
-            self._work()
-            gevent.sleep(1)
+            try:
+                obj = task_queue.get(timeout=3)
+                gevent.spawn(obj.run)
+            except Empty:
+                pass
+            except Exception as err:
+                traceback.print_exc()
+                LOGGER.error(f'Worker error: {err}')
+            finally:
+                gevent.sleep(self.n)
 
     def close(self):
         pass
-
-    def run(self):
-        task_queue.put(ProducerTask.from_settings())
-        workers = [self.work for _ in range(settings.DEFAULT_WORKER_NUMBER)]
-        gevent.joinall([gevent.spawn(worker) for worker in workers])

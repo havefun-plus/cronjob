@@ -1,6 +1,9 @@
 # 是否使用代理
 ENABLE_PROXY = True
 
+# 日志级别，默认ERROR
+LOG_LEVEL = 'ERROR'
+
 # proxy class
 PROXY_CLASS = 'spiders.proxy.IterProxy'
 
@@ -30,9 +33,3 @@ REDIS_SETTINGS = dict(
 
 # gevent worker queue size
 DEFAULT_WORKER_QUEUE_SIZE = 100
-
-# 每个worker默认生产者的协程数
-DEFAULT_PRODUCTER_NUMBER = 2
-
-# 每个worker默认消费者的协程数
-DEFAULT_CONSUMER_NUMBER = 8

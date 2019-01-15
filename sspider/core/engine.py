@@ -26,7 +26,8 @@ class Engine:
 
     def work(self):
         LOGGER.info('worker start...')
-        self.worker.run()
+        self.worker.start()
+        self.worker.join()
 
     def run_local(self, process=False, worker_num=1):
         LOGGER.info(f'run local mode with Process = {process}')
