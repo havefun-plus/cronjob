@@ -1,5 +1,5 @@
-import pytest
 import gevent
+import pytest
 
 from tests.helpers import ensure_redis_clear
 

@@ -1,6 +1,9 @@
 import logging
+import signal
 from multiprocessing import Process
 from threading import Thread
+
+import gevent
 
 from sspider.core.scheduler import Scheduler
 from sspider.core.worker import Worker
@@ -26,6 +29,7 @@ class Engine:
 
     def work(self):
         LOGGER.info('worker start...')
+        gevent.signal(signal.SIGQUIT, gevent.kill)
         self.worker.start()
         self.worker.join()
 
