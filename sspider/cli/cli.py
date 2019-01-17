@@ -1,13 +1,14 @@
 from gevent import monkey  # isort:skip
 monkey.patch_all(select=False)  # isort:skip
 
-import click
 import sys
 from functools import wraps
 
+import click
+from redis.exceptions import ConnectionError
+
 from sspider import __version__ as version
 from sspider.core.engine import Engine
-from redis.exceptions import ConnectionError
 
 
 def cli_decorator(code=0):
