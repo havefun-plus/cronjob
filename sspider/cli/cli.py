@@ -2,9 +2,30 @@ from gevent import monkey  # isort:skip
 monkey.patch_all(select=False)  # isort:skip
 
 import click
+import sys
+from functools import wraps
 
 from sspider import __version__ as version
 from sspider.core.engine import Engine
+from redis.exceptions import ConnectionError
+
+
+def cli_decorator(code=0):
+    def cli_wrapper(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                func(*args, **kwargs)
+            except ConnectionError as e:
+                click.echo(e)
+                sys.exit(code)
+            except KeyboardInterrupt:
+                click.echo()
+                sys.exit(0)
+
+        return wrapper
+
+    return cli_wrapper
 
 
 @click.group()
@@ -17,18 +38,21 @@ def main():
 @main.command()
 @click.option('--process', '-p', is_flag=True, help='use Process not Thread')
 @click.option('--num', '-n', default=1, help='Worker num')
+@cli_decorator(1)
 def runlocal(process, num):
     engine = Engine.from_settings()
     engine.run_local(process=process, worker_num=num)
 
 
 @main.command()
+@cli_decorator(2)
 def runworker():
     engine = Engine.from_settings()
     engine.work()
 
 
 @main.command()
+@cli_decorator(3)
 def runmaster():
     engine = Engine.from_settings()
     engine.schedule()
