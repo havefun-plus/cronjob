@@ -33,6 +33,8 @@ class Scheduler:
             )
             if spider_cls.right_now:
                 func(spider_cls)
+            else:
+                spider_cls.right_now = True
 
     def schedule_all(self):
         LOGGER.info('schedule all...')
