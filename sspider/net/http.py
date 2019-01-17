@@ -1,6 +1,3 @@
-from gevent import monkey  # isort:skip
-monkey.patch_all(select=False)  # isort:skip
-
 import logging
 from functools import partial
 from typing import Optional
