@@ -1,3 +1,6 @@
+from gevent import monkey  # isort:skip
+monkey.patch_all(select=False)  # isort:skip
+
 import click
 
 from sspider import __version__ as version
