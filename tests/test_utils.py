@@ -1,4 +1,4 @@
-from sspider.utils.user_agents import replace_user_agent
+from cronjob.utils.user_agents import replace_user_agent
 
 
 def test_agent():

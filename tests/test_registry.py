@@ -1,18 +1,18 @@
+from tests.cronjobs.spiders import ForTestSpider
 from tests.helpers import ensure_redis_clear
-from tests.spiders.spiders import ForTestSpider
 
 
 @ensure_redis_clear
 def test_singleton(mocker, connection):
-    from sspider.registry import Registry
-    r1 = Registry('tests.spiders', connection)
-    r2 = Registry('tests.spiders', connection)
+    from cronjob.core.registry import Registry
+    r1 = Registry('tests.cronjobs', connection)
+    r2 = Registry('tests.cronjobs', connection)
     assert r1 is r2
 
 
 @ensure_redis_clear
 def test_crud(registry):
-    test_sp_rk = list(registry._spiders.keys())[0]
+    test_sp_rk = list(registry._jobs.keys())[0]
 
     # test exists
     assert test_sp_rk in registry

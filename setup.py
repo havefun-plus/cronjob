@@ -1,7 +1,7 @@
 '''sspider is a simple spider'''
 from setuptools import find_packages, setup
 
-from sspider import __version__
+from cronjob import __version__
 
 requirements = [
     'arrow==0.13.0',
@@ -13,9 +13,9 @@ requirements = [
 ]
 
 setup(
-    name='sspider',
+    name='cronjob',
     version=__version__,
-    url='https://github.com/fucangyu/sspider/',
+    url='https://github.com/fucangyu/cronjob/',
     license='MIT',
     author='fucangyu',
     author_email='cangyufu@gmail.com',
@@ -29,7 +29,7 @@ setup(
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
-            'sspider = sspider.cli:main',
+            'cronjob = cronjob.cli:main',
         ],
     },
 )

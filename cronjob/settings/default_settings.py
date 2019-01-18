@@ -1,8 +1,12 @@
-# 是否使用代理
-ENABLE_PROXY = True
+# log level
 
-# 日志级别，默认ERROR
-LOG_LEVEL = 'ERROR'
+LOG_LEVEL = 'DEBUG'
+
+# 是否使用代理
+ENABLE_PROXY = False
+
+# DE
+DEFAULT_REGISTER_PREFIX = 'cronjob'
 
 # proxy class
 PROXY_CLASS = 'cronjobs.proxy.IterProxy'
@@ -20,7 +24,7 @@ RETRY_HTTP_CODE = [429]
 ENABLE_REPLACE_USER_AGENT = True
 
 # 爬虫所在路径
-SPIDERS_MODULE = 'spiders'
+CRONJOBS_MODULE = 'cronjobs'
 
 # redis 配置
 
@@ -32,4 +36,4 @@ REDIS_SETTINGS = dict(
 )
 
 # gevent worker queue size
-DEFAULT_WORKER_QUEUE_SIZE = 100
+DEFAULT_TASK_QUEUE_SIZE = 100
