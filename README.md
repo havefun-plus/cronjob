@@ -7,7 +7,7 @@
 当前版本`0.0.10`
 
 ```
-pip install git+https://github.com/fucangyu/sspider.git@0.0.10
+pip install git+https://github.com/fucangyu/cronjob.git@0.0.10
 ```
 
 ### Usage
