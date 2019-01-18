@@ -6,9 +6,9 @@ from tests.helpers import ensure_redis_clear
 
 @ensure_redis_clear
 def test_workflow(mocker, queue, registry):
-    from sspider.tasks import task_queue
-    from sspider.tasks.tasks import ProducerTask
-    from sspider.core.worker import Worker
+    from cronjob.tasks import task_queue
+    from cronjob.tasks.tasks import ProducerTask
+    from cronjob.core.worker import Worker
 
     def _run(self):
         while True:

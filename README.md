@@ -1,4 +1,31 @@
-# sspider (simple spider)
+# cronjob 
+
+之前整个项目做简单的定时爬虫调度，之后发现不止可以调度爬虫，也可以调度其他一些小任务，所以重构了一下
+
+### Installation
+
+当前版本`0.0.8`
+
+```
+pip install git+https://github.com/fucangyu/sspider.git@0.0.8
+```
+
+### Usage
+
+参考`examples`
+
+### TODO
+
+1. spider模板
+2. 监控
+3. proxy
+
+
+----
+以下是重构之前的文档
+---
+
+# sspider
 
 ### Precondition
 
@@ -48,20 +75,3 @@
 
 ---
 
-### Installation
-
-当前版本`0.0.8`
-
-```
-pip install git+https://github.com/fucangyu/sspider.git@0.0.8
-```
-
-### Usage
-
-参考`examples`
-
-### TODO
-
-1. spider模板
-2. 监控
-3. proxy
