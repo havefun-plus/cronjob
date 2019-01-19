@@ -12,28 +12,28 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Engine:
-    def __init__(self, worker, scheduler):
+    def __init__(self, worker, scheduler) -> None:
         self.worker = worker
         self.scheduler = scheduler
 
     @classmethod
-    def from_settings(cls):
+    def from_settings(cls) -> 'Engine':
         return cls(
             worker=Worker(),
             scheduler=Scheduler.from_settings(),
         )
 
-    def schedule(self):
+    def schedule(self) -> None:
         LOGGER.info('scheduler start...')
         self.scheduler.run()
 
-    def work(self):
+    def work(self) -> None:
         LOGGER.info('worker start...')
         gevent.signal(signal.SIGQUIT, gevent.kill)
         self.worker.start()
         self.worker.join()
 
-    def run_local(self, process=False, worker_num=1):
+    def run_local(self, process=False, worker_num=1) -> None:
         LOGGER.info(f'run local mode with Process = {process}')
         Job = Process if process else Thread
         jobs = [Job(target=self.work) for i in range(worker_num)]

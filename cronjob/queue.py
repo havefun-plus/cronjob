@@ -15,16 +15,16 @@ class DequeueTimeout(Exception):
 class Queue:
     prefix = f'{settings.DEFAULT_REGISTER_PREFIX}:queue:'
 
-    def __init__(self, name, connection):
+    def __init__(self, name: str, connection: 'StrictRedis'):
         self.connection = connection
         self.name = name
         self.register_key = f'{self.prefix}{name}'
 
     @classmethod
-    def from_settings(cls):
+    def from_settings(cls) -> 'Queue':
         return cls('default', connection)
 
-    def enqueue(self, job_rk) -> bool:
+    def enqueue(self, job_rk: str) -> bool:
         pipe = self.connection.pipeline()
         try:
             pipe.watch(job_rk)
@@ -36,7 +36,7 @@ class Queue:
             LOGGER.error('watch error')
             return False
 
-    def recv(self, timeout=3):
+    def recv(self, timeout: int = 3) -> None:
         msg = self.connection.blpop(
             self.register_key,
             timeout=timeout,

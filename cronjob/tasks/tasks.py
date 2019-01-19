@@ -9,30 +9,35 @@ LOGGER = logging.getLogger(__name__)
 
 
 class NormalTask(BaseTask):
-    def __init__(self, job_cls):
+    def __init__(self, job_cls: 'BaseJob') -> None:
         self.job_cls = job_cls
 
-    def run(self):
+    def run(self) -> None:
         LOGGER.info(f'{self.job_cls.__name__} run')
         obj = self.job_cls()
         obj.run()
 
 
 class ProducerTask(BaseTask):
-    def __init__(self, redis_queue, task_queue, registry):
+    def __init__(
+            self,
+            redis_queue: 'cronjob.queue.Queue',
+            task_queue: 'gevent.queue.Queue',
+            registry: 'Registry',
+    ) -> None:
         self.redis_queue = redis_queue
         self.task_queue = task_queue
         self.registry = registry
 
     @classmethod
-    def from_settings(cls):
+    def from_settings(cls) -> 'ProducerTask':
         return cls(
             redis_queue=RedisQueue.from_settings(),
             task_queue=task_queue,
             registry=Registry.from_settings(),
         )
 
-    def run(self):
+    def run(self) -> None:
         try:
             self._run()
         except Exception:
@@ -40,10 +45,10 @@ class ProducerTask(BaseTask):
         finally:
             self.repeat()
 
-    def repeat(self):
+    def repeat(self) -> None:
         self.task_queue.put(self)
 
-    def _run(self):
+    def _run(self) -> None:
         try:
             msg = self.redis_queue.recv()
             self.logger.info(f'recv msg: {msg}')

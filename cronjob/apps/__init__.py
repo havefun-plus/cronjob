@@ -40,5 +40,5 @@ class BaseJob(metaclass=JobMeta):
         self.logger.log(level, message, **kw)
 
     @classproperty
-    def interval(cls):
+    def interval(cls) -> int:
         return cls._rule.interval
