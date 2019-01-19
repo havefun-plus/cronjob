@@ -11,7 +11,10 @@ def test_singleton(mocker, connection):
 
 
 @ensure_redis_clear
-def test_crud(registry):
+def test_crud(registry, connection):
+    from cronjob.core.registry import Registry
+    registry._initialized = False
+    registry = Registry('tests.cronjobs', connection)
     test_sp_rk = list(registry._jobs.keys())[0]
 
     # test exists

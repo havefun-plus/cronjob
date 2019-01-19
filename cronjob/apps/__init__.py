@@ -42,3 +42,43 @@ class BaseJob(metaclass=JobMeta):
     @classproperty
     def interval(cls) -> int:
         return cls._rule.interval
+
+
+class cron:  # noqa
+    def __init__(
+            self,
+            rule,
+            priority: int = 0,
+            cancelled: bool = False,
+            right_now: bool = False,
+            prefix: str = 'registry',
+    ):
+        from cronjob.core.registry import Registry
+        self.rule = rule
+        self.priority = priority
+        self.cancelled = cancelled
+        self.right_now = right_now
+        self.prefix = prefix
+        self.registry = Registry.from_settings()
+
+    def __call__(self, func):
+        def run(self):
+            func()
+
+        cls_name = func.__name__ + '_FuncJob'
+        new_cls = type(
+            cls_name,
+            (BaseJob, ),
+            dict(
+                rule=self.rule,
+                priority=self.priority,
+                cancelled=self.cancelled,
+                right_now=self.right_now,
+                prefix=self.prefix,
+                run=run,
+            ),
+        )
+        self.registry._jobs[new_cls.register_key] = new_cls
+        self.registry.persist()
+
+        return func

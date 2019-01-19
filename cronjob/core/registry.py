@@ -20,9 +20,12 @@ class Registry:
     def __new__(cls, *args, **kwargs) -> 'Registry':
         if cls._instance is None:
             cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
         return cls._instance
 
     def __init__(self, module: str, connection) -> None:
+        if self._initialized: return
+        self._initialized = True
         self.module = module
         self.connection = connection
         self._jobs = OrderedDict()
