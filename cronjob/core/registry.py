@@ -6,7 +6,7 @@ from typing import AnyStr
 from redis.exceptions import WatchError
 
 from cronjob.apps import BaseJob
-from cronjob.connection import connection
+from cronjob.broker import connection
 from cronjob.settings import settings
 from cronjob.utils.loaders import get_all_target_cls
 

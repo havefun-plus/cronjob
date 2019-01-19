@@ -2,7 +2,7 @@ import logging
 
 from redis.exceptions import WatchError
 
-from cronjob.connection import connection
+from cronjob.broker import connection
 from cronjob.settings import settings
 
 LOGGER = logging.getLogger(__name__)
