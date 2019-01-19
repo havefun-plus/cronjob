@@ -1,3 +1,6 @@
+import datetime
+import logging
+
 from cronjob.apps import BaseJob
 
 
@@ -16,3 +19,5 @@ class NormalJob(BaseJob):
 
     def run(self):
         self.logger.info('Normal job run')
+        infos = dict(msg='test', time=datetime.datetime.now())
+        self.log(infos, level=logging.DEBUG)
