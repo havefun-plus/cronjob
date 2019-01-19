@@ -4,10 +4,10 @@
 
 ### Installation
 
-当前版本`0.0.11`
+当前版本`0.0.12`
 
 ```
-pip install git+https://github.com/fucangyu/cronjob.git@0.0.11
+pip install git+https://github.com/fucangyu/cronjob.git@0.0.12
 ```
 
 ### Usage
