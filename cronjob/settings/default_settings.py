@@ -1,29 +1,11 @@
+# ----- general settings -----
 # log level
 
 LOG_LEVEL = 'DEBUG'
 
-# 是否使用代理
-ENABLE_PROXY = False
-
-# DE
 DEFAULT_REGISTER_PREFIX = 'cronjob'
 
-# proxy class
-PROXY_CLASS = 'cronjobs.proxy.IterProxy'
-
-# 爬取失败或者http code错误时候需要重试的次数
-RETRY_TIMES = 10
-
-# 针对每个请求的时间限制，不同于requests的timeout
-REQUEST_TIMEOUT = 30
-
-# 需要重试的http code
-RETRY_HTTP_CODE = [429]
-
-# 是否需要更换user agent
-ENABLE_REPLACE_USER_AGENT = True
-
-# 爬虫所在路径
+# 定时任务所在路径
 CRONJOBS_MODULE = 'cronjobs'
 
 # redis 配置
@@ -37,3 +19,23 @@ REDIS_SETTINGS = dict(
 
 # gevent worker queue size
 DEFAULT_TASK_QUEUE_SIZE = 100
+
+# ----- spider job settings -----
+
+# 是否使用代理
+ENABLE_PROXY = False
+
+# proxy class
+PROXY_CLASS = 'cronjobs.proxy.IterProxy'
+
+# 针对每个请求的时间限制，不同于requests的timeout
+REQUEST_TIMEOUT = 30
+
+# 爬取失败或者http code错误时候需要重试的次数
+RETRY_TIMES = 10
+
+# 需要重试的http code
+RETRY_HTTP_CODE = [429]
+
+# 是否需要更换user agent
+ENABLE_REPLACE_USER_AGENT = True

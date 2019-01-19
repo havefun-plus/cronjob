@@ -1,36 +1,32 @@
-### 配置文件
+### 一、配置文件
 
 目前需要在项目根目录`export PYTHONPATH=.`
 
 通过环境变量`CRONJOB_SETTINGS`指定配置文件, 配置见`settings.example.py`, 也可不指定使用默认配置
 
-### 定时任务脚本
+### 二、定时任务脚本
 
 所有定时任务默认放在工程根目录下的`cronjobs`文件夹
 
+#### 2.1 通用任务举例
 
-以定时爬虫脚本举例
+参考`examples/cronjobs/normal.py`
 
-1. 爬虫需要继承`cronjob.apps.spider_app.SpiderJob`, 也可以继承`cronjob.apps.BaseJob`
-2. 实现`run`方法, 在这个方法内可以随便折腾
-3. 赋值类属性`rule`, 用法同[crontab](https://en.wikipedia.org/wiki/Cron), 比如`3,15 8-11 * * *`在上午8点到11点的第3和第15分钟执行。或者用类似`1h1m1s`每隔1小时1分1秒执行一次, 类似可用`10m8s`, `3h30`
-3. 发送请求建议使用`self.http`, 也可以使用`requests`, 这样的话会有一些配置失效, 比如重试， 代理。`self.http`返回的也是`requests.Response`
-2. 打印日志最好使用`self.logger`或者`self.log`
+#### 2.2 以定时爬虫脚本举例
 
-### 使用代理
+参考`examples/cronjobs/baidu.py`
 
-1. 继承`from cronjob.net.proxy import BaseProxy`, 实现`get_proxy_ips`方法，返回可迭代的代理`ip`, 参考`example.proxy.Iterproxy`， 也可以直接实现`get`方法，每次返回一次`ip`
-2. 在配置文件中指定代理类`PROXY_CLASS`
+代理配置参考`examples/cronjobs/proxy.py`
 
 
-### 启动
+### 三、启动
 
-#### 1. 主从运行
+#### 3.1 主从运行
 
 * 启动主节点: `cronjob runmaster`
 * 启动从节点: `cronjob runworker`
 
-#### 2. 单节点运行
+#### 3.2 单节点运行
 
 默认线程模式：
 

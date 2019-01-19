@@ -1,5 +1,5 @@
 from cronjob.apps import BaseJob
-from cronjob.net import http
+from . import http
 
 
 class SpiderJob(BaseJob):
