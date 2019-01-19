@@ -5,7 +5,7 @@ from tests.helpers import fake_connection
 
 @pytest.fixture(autouse=True)
 def connection(mocker):
-    mocker.patch('cronjob.connection.connection', fake_connection)
+    mocker.patch('cronjob.broker.connection', fake_connection)
     return fake_connection
 
 

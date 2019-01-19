@@ -16,6 +16,9 @@ class NormalJob(BaseJob):
     # rule = '1m3s'  # 每隔1分3秒执行一次
     # rule = '1h5s'  # 每隔1小时5秒执行一次
     # rule = '2h1m3s'  # 每隔2小时1分3秒执行一次
+    right_now = False  # 程序启动时候是否立刻执行此任务
+    priority = 9  # 被调度的优先权，数字越大优先权越高
+    cancelled = False  # 是否取消此任务
 
     def run(self):
         self.logger.info('Normal job run')
