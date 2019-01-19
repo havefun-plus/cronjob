@@ -1,6 +1,8 @@
 import random
 from typing import Iterable
+
 from cronjob.apps.spider_app.proxy import BaseProxy
+
 """
 使用代理需要配置
     1. ENABLE_PROXY = True
