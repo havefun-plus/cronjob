@@ -10,7 +10,13 @@
 
 #### 2.1 通用任务举例
 
+1. 使用类
+
 参考`examples/cronjobs/normal.py`
+
+2. 使用装饰器
+
+参考`examples/cronjobs/normal_func.py`
 
 #### 2.2 以定时爬虫脚本举例
 
