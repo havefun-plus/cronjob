@@ -1,19 +1,25 @@
 import logging
-from datetime import datetime
-
-from croniter import croniter
 
 from cronjob.settings import settings
 from cronjob.utils.utils import classproperty
+from cronjob.utils.rule import CronRule
 
 
 class JobError(Exception):
     pass
 
 
-class BaseJob:
-    prefix = f'{settings.DEFAULT_REGISTER_PREFIX}:registry:'
-    schedule = ''
+class JobMeta(type):
+    def __new__(metacls, cls_name, parents, attrs):
+        attrs['_rule'] = CronRule(attrs['rule'])
+        prefix = f'{settings.DEFAULT_REGISTER_PREFIX}:{attrs.get("prefix") or parents[0].prefix}:'
+        attrs['register_key'] = f'{prefix}{cls_name}'
+        return type.__new__(metacls, cls_name, parents, attrs)
+
+
+class BaseJob(metaclass=JobMeta):
+    prefix = 'registry'
+    rule = ''
     priority = 0
     cancelled = False
     right_now = False
@@ -34,12 +40,5 @@ class BaseJob:
         self.logger.log(level, message, **kw)
 
     @classproperty
-    def register_key(cls):
-        return f'{cls.prefix}{cls.__name__}'
-
-    @classproperty
     def interval(cls):
-        # TODO validate schedule string
-        now = datetime.now()
-        next_time = croniter(cls.schedule, now).get_next(datetime)
-        return (next_time - now).seconds
+        return cls._rule.interval

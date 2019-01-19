@@ -2,7 +2,7 @@ from cronjob.apps.spider_app import SpiderJob
 
 
 class ForTestSpider(SpiderJob):
-    schedule = '* * * * *'
+    rule = '* * * * *'
     right_now = True
 
     def run(self):

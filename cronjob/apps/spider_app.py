@@ -3,7 +3,7 @@ from cronjob.net import http
 
 
 class SpiderJob(BaseJob):
-    schedule = ''
+    rule = ''
     priority = 0
     cancelled = False
     right_now = False
