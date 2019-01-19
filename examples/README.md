@@ -13,7 +13,7 @@
 
 1. 爬虫需要继承`cronjob.apps.spider_app.SpiderJob`, 也可以继承`cronjob.apps.BaseJob`
 2. 实现`run`方法, 在这个方法内可以随便折腾
-3. 赋值类属性`schedule`, 用法同[crontab](https://en.wikipedia.org/wiki/Cron), 比如`3,15 8-11 * * *`在上午8点到11点的第3和第15分钟执行。
+3. 赋值类属性`rule`, 用法同[crontab](https://en.wikipedia.org/wiki/Cron), 比如`3,15 8-11 * * *`在上午8点到11点的第3和第15分钟执行。或者用类似`1h1m1s`每隔1小时1分1秒执行一次, 类似可用`10m8s`, `3h30`
 3. 发送请求建议使用`self.http`, 也可以使用`requests`, 这样的话会有一些配置失效, 比如重试， 代理。`self.http`返回的也是`requests.Response`
 2. 打印日志最好使用`self.logger`或者`self.log`
 

@@ -3,7 +3,7 @@ from cronjob.apps.spider_app import SpiderJob
 
 class ZhihuSpider(SpiderJob):
     priority = 1
-    schedule = '* * * * *'
+    rule = '* * * * *'
 
     def run(self):
         self.logger.info('In Zhihu spider')

@@ -2,7 +2,7 @@ from cronjob.apps.spider_app import SpiderJob
 
 
 class BaiduSpider(SpiderJob):
-    schedule = '* * * * *'
+    rule = '5s'
 
     def run(self):
         self.logger.info('In Baidu spider')
