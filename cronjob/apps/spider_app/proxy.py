@@ -6,7 +6,7 @@ class ProxyError(Exception):
 
 
 class BaseProxy:
-    def __init__(self):
+    def __init__(self) -> None:
         self.proxies = []
 
     def get_proxy_ips(self) -> Iterable[str]:
