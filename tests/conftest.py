@@ -1,26 +1,29 @@
+import fakeredis
 import pytest
 
+from cronjob.settings import settings
 from tests.helpers import fake_connection
 
 
 @pytest.fixture(autouse=True)
 def connection(mocker):
-    mocker.patch('cronjob.broker.connection', fake_connection)
+    mocker.patch('redis.StrictRedis', fakeredis.FakeStrictRedis)
     return fake_connection
 
 
 @pytest.fixture
-def registry(connection):
+def registry():
     from cronjob.core.registry import Registry
-    registry = Registry('tests.cronjobs', connection)
+    registry = Registry('tests.cronjobs')
     return registry
 
 
 @pytest.fixture
 def queue(connection):
-    from cronjob.queue import Queue
-    queue = Queue.from_settings()
-    return queue
+    from cronjob.queues import get_queue_client
+    q = get_queue_client(dict(queue_type='redis', config={}))
+    q.set_qname('test')
+    return q
 
 
 @pytest.fixture

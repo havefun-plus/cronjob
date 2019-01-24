@@ -1,8 +1,8 @@
 import logging
 
 from cronjob.core.registry import Registry
-from cronjob.queue import DequeueTimeout
-from cronjob.queue import Queue as RedisQueue
+from cronjob.queues import DequeueTimeout, get_queue_client
+from cronjob.settings import settings
 from cronjob.tasks import BaseTask, task_queue
 
 LOGGER = logging.getLogger(__name__)
@@ -21,18 +21,20 @@ class NormalTask(BaseTask):
 class ProducerTask(BaseTask):
     def __init__(
             self,
-            redis_queue: 'cronjob.queue.Queue',
+            msg_queue: 'cronjob.queues.BaseQueue',
             task_queue: 'gevent.queue.Queue',
             registry: 'Registry',
     ) -> None:
-        self.redis_queue = redis_queue
+        self.msg_queue = msg_queue
         self.task_queue = task_queue
         self.registry = registry
 
     @classmethod
     def from_settings(cls) -> 'ProducerTask':
+        queue = get_queue_client(settings.QUEUE_CONFIG)
+        queue.set_qname(settings.JOB_QUEUE_NAME)
         return cls(
-            redis_queue=RedisQueue.from_settings(),
+            msg_queue=queue,
             task_queue=task_queue,
             registry=Registry.from_settings(),
         )
@@ -50,7 +52,7 @@ class ProducerTask(BaseTask):
 
     def _run(self) -> None:
         try:
-            msg = self.redis_queue.recv()
+            msg = self.msg_queue.get()
             self.logger.info(f'recv msg: {msg}')
             job_cls = self.registry[msg]
         except DequeueTimeout:

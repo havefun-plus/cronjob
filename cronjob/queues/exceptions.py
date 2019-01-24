@@ -1,0 +1,2 @@
+class DequeueTimeout(Exception):
+    pass

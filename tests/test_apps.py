@@ -5,4 +5,4 @@ def test_metacls():
         rule = '2m'
 
     assert ForTestJob.interval == 120
-    assert ForTestJob.register_key == 'cronjob:registry:ForTestJob'
+    assert ForTestJob.register_key == 'ForTestJob'

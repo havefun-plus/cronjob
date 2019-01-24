@@ -27,7 +27,7 @@ def test_workflow(mocker, queue, registry):
     mocker.patch.object(Worker, '_run', new=_run)
     task_queue.put(
         ProducerTask(
-            redis_queue=queue,
+            msg_queue=queue,
             task_queue=task_queue,
             registry=registry,
         ))
