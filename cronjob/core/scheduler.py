@@ -5,7 +5,8 @@ import traceback
 from typing import Callable
 
 from cronjob.core.registry import Registry
-from cronjob.queue import Queue
+from cronjob.queues import get_queue_client
+from cronjob.settings import settings
 
 LOGGER = logging.getLogger(__name__)
 
@@ -18,10 +19,9 @@ class Scheduler:
 
     @classmethod
     def from_settings(cls) -> 'Scheduler':
-        return cls(
-            registry=Registry.from_settings(),
-            queue=Queue.from_settings(),
-        )
+        queue = get_queue_client(settings.QUEUE_CONFIG)
+        queue.set_qname(settings.JOB_QUEUE_NAME)
+        return cls(registry=Registry.from_settings(), queue=queue)
 
     def periodic(self, func: Callable[['BaseJob'], None],
                  job_cls: 'BaseJob') -> None:
@@ -47,7 +47,7 @@ class Scheduler:
     def schedule(self, job_cls: 'BaseJob') -> None:
         LOGGER.info(f'schedule {job_cls.__name__}')
         # TODO handle enqueue failed
-        self.queue.enqueue(job_cls.register_key)
+        self.queue.put(job_cls.register_key.encode())
 
     def _run(self) -> None:
         try:
@@ -62,7 +62,3 @@ class Scheduler:
     def run(self):
         while True:
             self._run()
-
-    def restart(self):
-        # TODO
-        pass

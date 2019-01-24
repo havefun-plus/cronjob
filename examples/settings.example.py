@@ -6,7 +6,7 @@ LOG_LEVEL = 'DEBUG'
 # 定时任务所在路径
 CRONJOBS_MODULE = 'cronjobs'
 
-# redis 配置
+# queue 配置
 
 REDIS_SETTINGS = dict(
     host='0.0.0.0',
@@ -14,6 +14,9 @@ REDIS_SETTINGS = dict(
     db=0,
     password=None,
 )
+QUEUE_CONFIG = dict(queue_type='redis', config=REDIS_SETTINGS)
+
+JOB_QUEUE_NAME = 'default'
 
 # gevent worker queue size
 DEFAULT_TASK_QUEUE_SIZE = 100

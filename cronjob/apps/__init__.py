@@ -12,13 +12,11 @@ class JobError(Exception):
 class JobMeta(type):
     def __new__(metacls, cls_name, parents, attrs):
         attrs['_rule'] = CronRule(attrs['rule'])
-        prefix = f'{settings.DEFAULT_REGISTER_PREFIX}:{attrs.get("prefix") or parents[0].prefix}:'
-        attrs['register_key'] = f'{prefix}{cls_name}'
+        attrs['register_key'] = cls_name
         return type.__new__(metacls, cls_name, parents, attrs)
 
 
 class BaseJob(metaclass=JobMeta):
-    prefix = 'registry'
     rule = ''
     priority = 0
     cancelled = False
@@ -78,7 +76,6 @@ class cron:  # noqa
                 run=run,
             ),
         )
-        self.registry._jobs[new_cls.register_key] = new_cls
-        self.registry.persist()
+        self.registry.add_job(new_cls)
 
         return func
