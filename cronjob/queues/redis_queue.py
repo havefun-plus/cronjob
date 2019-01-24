@@ -37,7 +37,7 @@ class RedisQueue(BaseQueue):
             return False
 
     def get(self, timeout: float = 3) -> AnyStr:
-        return self._get(self.qname, )
+        return self._get(self.qname, timeout)
 
     def _get(self, qname: str, timeout: float = 3) -> AnyStr:
         msg = self.connection.blpop(
