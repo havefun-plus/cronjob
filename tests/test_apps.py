@@ -14,10 +14,11 @@ def test_metacls():
 
     event_called = False
 
-    @receiver(pre_action, sender=ForTestJob)
+    @receiver(pre_action, sender=ForTestJob, test_args='')
     def test_event(sender, **kwargs):
         nonlocal event_called
         event_called = True
+        assert 'test_args' in kwargs
 
     ForTestJob()()
 
