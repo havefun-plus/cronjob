@@ -1,8 +1,9 @@
 import logging
 
-from cronjob.settings import settings
 from cronjob.utils.utils import classproperty
 from cronjob.utils.rule import CronRule
+
+from cronjob.events.event import Event
 
 
 class JobError(Exception):
@@ -21,6 +22,9 @@ class BaseJob(metaclass=JobMeta):
     priority = 0
     cancelled = False
     right_now = False
+    pre_action = Event()
+    post_action = Event()
+    err_action = Event()
 
     def __init__(self, *args, **kwargs):
         pass
@@ -40,6 +44,16 @@ class BaseJob(metaclass=JobMeta):
     @classproperty
     def interval(cls) -> int:
         return cls._rule.interval
+
+    def __call__(self):
+        try:
+            self.pre_action()
+            self.run()
+        except Exception:
+            self.err_action()
+            raise
+        else:
+            self.post_action()
 
 
 class cron:  # noqa
