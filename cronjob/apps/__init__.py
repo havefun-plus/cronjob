@@ -1,10 +1,9 @@
 import logging
 
-from cronjob.settings import settings
 from cronjob.utils.utils import classproperty
 from cronjob.utils.rule import CronRule
 
-from cronjob.core.event import Event
+from cronjob.events.event import Event
 
 
 class JobError(Exception):
@@ -53,7 +52,7 @@ class BaseJob(metaclass=JobMeta):
         except Exception:
             self.err_action()
             raise
-        finally:
+        else:
             self.post_action()
 
 

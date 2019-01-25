@@ -15,7 +15,7 @@ class NormalTask(BaseTask):
     def run(self) -> None:
         LOGGER.info(f'{self.job_cls.__name__} run')
         obj = self.job_cls()
-        obj.run()
+        obj()
 
 
 class ProducerTask(BaseTask):

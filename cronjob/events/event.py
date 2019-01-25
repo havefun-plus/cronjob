@@ -1,33 +1,30 @@
-import traceback
 import logging
-import functools
+import traceback
+from functools import partial
 from typing import Callable
 
 from .actions import Action
-from cronjob.apps import BaseJob
 
 LOGGER = logging.getLogger(__name__)
 
 
 class Event(list):
-    def __call__(self, *args, **kwargs) -> None:
+    def __call__(self) -> None:
         for f in self:
             try:
-                f(*args, **kwargs)
+                f()
             except Exception:
                 LOGGER.error('event error')
                 traceback.print_exc()
 
 
 class receiver:  # noqa
-    def __init__(self, action: Action, sender: BaseJob) -> None:
+    def __init__(self, action: Action, sender: 'BaseJob', **kwargs) -> None:
         self.sender = sender
         self.action = action
+        self.kwargs = kwargs
 
     def __call__(self, func) -> Callable:
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            actions = getattr(self.sender, self.action.name)
-            actions.append(func)
-
-        return wrapper
+        actions = getattr(self.sender, self.action.name)
+        actions.append(partial(func, self.sender, **self.kwargs))
+        return func
