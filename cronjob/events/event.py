@@ -1,5 +1,6 @@
 import logging
 import traceback
+import types
 from functools import partial
 from typing import Callable
 
@@ -20,7 +21,10 @@ class Event(list):
 
 class receiver:  # noqa
     def __init__(self, action: Action, sender: 'BaseJob', **kwargs) -> None:
-        self.sender = sender
+        if isinstance(sender, types.FunctionType):
+            self.sender = sender.cronjob_cls
+        else:
+            self.sender = sender
         self.action = action
         self.kwargs = kwargs
 

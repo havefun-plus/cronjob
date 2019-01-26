@@ -14,6 +14,9 @@ class JobMeta(type):
     def __new__(metacls, cls_name, parents, attrs):
         attrs['_rule'] = CronRule(attrs['rule'])
         attrs['register_key'] = cls_name
+        attrs['pre_action'] = Event()
+        attrs['post_action'] = Event()
+        attrs['err_action'] = Event()
         return type.__new__(metacls, cls_name, parents, attrs)
 
 
@@ -22,9 +25,6 @@ class BaseJob(metaclass=JobMeta):
     priority = 0
     cancelled = False
     right_now = False
-    pre_action = Event()
-    post_action = Event()
-    err_action = Event()
 
     def __init__(self, *args, **kwargs):
         pass
@@ -77,7 +77,7 @@ class cron:  # noqa
         def run(self):
             func()
 
-        cls_name = func.__name__ + '_FuncJob'
+        cls_name = func.__name__
         new_cls = type(
             cls_name,
             (BaseJob, ),
@@ -91,5 +91,6 @@ class cron:  # noqa
             ),
         )
         self.registry.add_job(new_cls)
+        func.cronjob_cls = new_cls
 
         return func
