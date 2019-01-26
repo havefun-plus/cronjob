@@ -2,6 +2,7 @@ import datetime
 import logging
 
 from cronjob.apps import BaseJob
+from cronjob.events import pre_action, receiver
 
 
 class NormalJob(BaseJob):
@@ -24,3 +25,8 @@ class NormalJob(BaseJob):
         self.logger.info('Normal job run')
         infos = dict(msg='test', time=datetime.datetime.now())
         self.log(infos, level=logging.DEBUG)
+
+
+@receiver(pre_action, NormalJob)
+def pre_normaljob_action(sender):
+    print('This will called before `NormalJob` called')
