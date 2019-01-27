@@ -14,4 +14,4 @@ def normal_func():
 
 @receiver(post_action, normal_func)
 def post_normaljob_action(sender):
-    print('This will called after `normal_func` called')
+    print('This will be called after `normal_func`.')

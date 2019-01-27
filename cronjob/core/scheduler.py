@@ -1,7 +1,6 @@
 import logging
 import sched
 import time
-import traceback
 from typing import Callable
 
 from cronjob.core.registry import Registry
@@ -54,8 +53,7 @@ class Scheduler:
             self.schedule_all()
             self._scheduler.run()
         except Exception:
-            LOGGER.error('scheduler error')
-            traceback.print_exc()
+            LOGGER.error('scheduler error', exc_info=True)
             time.sleep(1)
         LOGGER.error('scheduler stop')
 

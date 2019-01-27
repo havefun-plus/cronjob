@@ -24,7 +24,7 @@ def iter_target_classes(module: ModuleType, target_cls: type) -> Type:
         if inspect.isclass(obj) and \
            issubclass(obj, target_cls) and \
            obj.__module__ == module.__name__ and \
-           not target_cls is obj:
+           target_cls is not obj:
             yield obj
 
 

@@ -1,7 +1,6 @@
 import fakeredis
 import pytest
 
-from cronjob.settings import settings
 from tests.helpers import fake_connection
 
 

@@ -15,11 +15,11 @@ class CronRule:
     def parse_hms(self) -> int:
         flags = [1, 60, 3600]
         rule = self.rule.lower()
-        l = list(map(int, re.split('[hms]', rule)[:-1]))
+        nums = list(map(int, re.split('[hms]', rule)[:-1]))
         result = 0
         for i, pos in enumerate('smh'):
             if pos in rule:
-                result += flags[i] * l.pop()
+                result += flags[i] * nums.pop()
         return result
 
     @property
