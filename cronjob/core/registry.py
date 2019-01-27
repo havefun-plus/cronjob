@@ -20,7 +20,8 @@ class Registry:
         return cls._instance
 
     def __init__(self, module: str) -> None:
-        if self._initialized: return
+        if self._initialized:
+            return
         self._initialized = True
         self.module = module
         self._jobs = OrderedDict()

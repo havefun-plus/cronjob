@@ -29,4 +29,4 @@ class NormalJob(BaseJob):
 
 @receiver(pre_action, NormalJob)
 def pre_normaljob_action(sender):
-    print('This will called before `NormalJob` called')
+    print('This will be called before `NormalJob`')

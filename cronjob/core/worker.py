@@ -1,5 +1,4 @@
 import logging
-import traceback
 
 import gevent
 from gevent import Greenlet
@@ -25,8 +24,7 @@ class Worker(Greenlet):
             except Empty:
                 pass
             except Exception as err:
-                traceback.print_exc()
-                LOGGER.error(f'Worker error: {err}')
+                LOGGER.error(f'Worker error', exc_info=True)
             finally:
                 gevent.sleep(self.n)
 
