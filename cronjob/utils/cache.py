@@ -6,7 +6,6 @@ LOGGER = logging.getLogger(__name__)
 
 
 class LocalCache(OrderedDict):
-
     def __init__(self, limit=None):
         super().__init__()
         self.limit = limit
@@ -23,7 +22,6 @@ dns_cache = LocalCache(10000)
 
 
 def set_dns_cache():
-
     def _getaddrinfo(*args, **kwargs):
         if args in dns_cache:
             LOGGER.debug(f'Use dns cache {args}:{dns_cache[args]}')
