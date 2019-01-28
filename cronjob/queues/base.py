@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any
+from typing import Any, AnyStr
 
 
 class BaseMessage(metaclass=ABCMeta):
@@ -25,5 +25,5 @@ class BaseQueue(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get(self, timeout: float = 3.0):
+    def get(self, timeout: float = 3.0) -> AnyStr:
         pass

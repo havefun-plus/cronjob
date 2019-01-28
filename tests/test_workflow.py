@@ -1,5 +1,4 @@
 import gevent
-
 from tests.helpers import ensure_redis_clear
 
 
