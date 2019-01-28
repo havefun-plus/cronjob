@@ -1,5 +1,4 @@
 import logging
-import traceback
 import types
 from functools import partial
 from typing import Callable
@@ -15,8 +14,7 @@ class Event(list):
             try:
                 f()
             except Exception:
-                LOGGER.error('event error')
-                traceback.print_exc()
+                LOGGER.error('event error', exc_info=True)
 
 
 class receiver:  # noqa
