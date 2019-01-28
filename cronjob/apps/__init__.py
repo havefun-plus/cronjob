@@ -12,12 +12,13 @@ class JobError(Exception):
 
 class JobMeta(type):
     def __new__(metacls, cls_name, parents, attrs):
-        attrs['_rule'] = CronRule(attrs['rule'])
-        attrs['register_key'] = cls_name
-        attrs['pre_action'] = Event()
-        attrs['post_action'] = Event()
-        attrs['err_action'] = Event()
-        return type.__new__(metacls, cls_name, parents, attrs)
+        cls = type.__new__(metacls, cls_name, parents, attrs)
+        setattr(cls, '_rule', CronRule(attrs['rule']))
+        setattr(cls, 'register_key', cls_name)
+        for name in ['pre_action', 'post_action', 'err_action']:
+            event = Event(name, parents)
+            setattr(cls, name, event)
+        return cls
 
 
 class BaseJob(metaclass=JobMeta):

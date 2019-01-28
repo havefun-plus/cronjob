@@ -9,8 +9,19 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Event(list):
+    def __init__(self, name, parents):
+        super().__init__()
+        self.name = name
+        self.partents = parents
+
     def __call__(self) -> None:
-        for f in self:
+        actions = []
+        for item in self.partents:
+            more = getattr(item, self.name)
+            if more:
+                actions.extend(more)
+        actions.extend(self)
+        for f in actions:
             try:
                 f()
             except Exception:
