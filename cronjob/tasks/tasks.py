@@ -9,6 +9,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 class NormalTask(BaseTask):
+    """
+    这个类是对job的封装
+    """
+
     def __init__(self, job_cls: 'BaseJob') -> None:
         self.job_cls = job_cls
 
@@ -19,6 +23,10 @@ class NormalTask(BaseTask):
 
 
 class ProducerTask(BaseTask):
+    """
+    这个task会不停的从msg_queue里面取消息，实例化任务，扔进task_queue
+    """
+
     def __init__(
             self,
             msg_queue: 'cronjob.queues.BaseQueue',

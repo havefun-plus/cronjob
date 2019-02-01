@@ -11,6 +11,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Registry:
+    """
+    所有的Job都注册在这里，是一个单例类，也只初始化一次
+    """
     _instance = None
 
     def __new__(cls, *args, **kwargs) -> 'Registry':
@@ -36,7 +39,16 @@ class Registry:
         for job in jobs:
             self.add_job(job)
 
+    def delete_job(self, job: BaseJob) -> bool:
+        pass
+
     def add_job(self, job: BaseJob) -> None:
+        """注册Job都要使用这个入口，每次注册都会对所有的job进行排序插入
+
+        :param job:
+        :type job: BaseJob
+        :rtype: None
+        """
         klasses = list(self._jobs.values())
         klasses.append(job)
         klasses.sort(key=attrgetter('priority'), reverse=True)

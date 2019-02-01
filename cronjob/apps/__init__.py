@@ -11,6 +11,10 @@ class JobError(Exception):
 
 
 class JobMeta(type):
+    """
+    所有Job的元类，添加`_rule`和`register_key`，以及event hook
+    """
+
     def __new__(metacls, cls_name, parents, attrs):
         cls = type.__new__(metacls, cls_name, parents, attrs)
         setattr(cls, '_rule', CronRule(attrs['rule']))
