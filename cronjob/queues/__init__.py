@@ -11,4 +11,7 @@ __all__ = ['get_queue_client', 'DequeueTimeout']
 
 
 def get_queue_client(config: dict) -> BaseQueue:
+    """
+    根据配置实例化不同的queue
+    """
     return registry[config['queue_type']](config['config'])

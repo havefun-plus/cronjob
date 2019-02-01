@@ -7,6 +7,10 @@ task_queue = TaskQueue(settings.DEFAULT_TASK_QUEUE_SIZE)
 
 
 class BaseTask:
+    """
+    这个类是对Job的封装，提供统一的接口给Worker执行
+    """
+
     def run(self):
         raise NotImplementedError
 
