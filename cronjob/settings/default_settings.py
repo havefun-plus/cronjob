@@ -8,15 +8,22 @@ CRONJOBS_MODULE = 'cronjobs'
 
 # queue 配置
 
-REDIS_SETTINGS = dict(
-    host='0.0.0.0',
-    port=6379,
-    db=0,
-    password=None,
-)
-QUEUE_CONFIG = dict(queue_type='redis', config=REDIS_SETTINGS)
-
+# use redis queue
 JOB_QUEUE_NAME = 'default'
+
+# REDIS_SETTINGS = dict(
+#     host='0.0.0.0',
+#     port=6379,
+#     db=0,
+#     password=None,
+# )
+
+# QUEUE_CONFIG = dict(queue_type='redis', config=REDIS_SETTINGS)
+
+# use `queue` or `multiprocessing.Queue`
+QUEUE_CONFIG = dict(queue_type='thread', config=None)
+# QUEUE_CONFIG = dict(queue_type='process', config=None)
+
 
 # gevent worker queue size
 DEFAULT_TASK_QUEUE_SIZE = 100

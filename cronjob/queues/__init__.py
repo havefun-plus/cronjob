@@ -1,10 +1,12 @@
 from .redis_queue import RedisQueue
+from .local_queue import ThreadQueue, ProcessQueue
 from .base import BaseQueue
 from .exceptions import DequeueTimeout
 
 registry = {
     klass.queue_type: klass
-    for klass in [RedisQueue] if klass and hasattr(klass, 'queue_type')
+    for klass in [RedisQueue, ThreadQueue, ProcessQueue]
+    if klass and hasattr(klass, 'queue_type')
 }
 
 __all__ = ['get_queue_client', 'DequeueTimeout']
