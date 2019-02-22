@@ -1,9 +1,10 @@
-from typing import Any, AnyStr
-from queue import Queue as TQueue, Empty
 from multiprocessing import Queue as PQueue
+from queue import Empty
+from queue import Queue as TQueue
+from typing import Any, AnyStr
 
-from .exceptions import DequeueTimeout
 from .base import BaseQueue
+from .exceptions import DequeueTimeout
 
 
 class LocalQueue(BaseQueue):
