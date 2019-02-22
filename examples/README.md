@@ -32,6 +32,8 @@
 * 启动主节点: `cronjob runmaster`
 * 启动从节点: `cronjob runworker`
 
+* 注意主从运行下`queue`不能指定`thread`或者`process`
+
 #### 3.2 单节点运行
 
 默认线程模式：
@@ -45,6 +47,9 @@ mac下可能需要`export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES`
 
 * `cronjob runlocal --process`, 一个进程调度，默认一个进程爬取
 
+* 注意此模式下`queue`不能指定`thread`
+
 可以加worker:
 
 * `cronjob runlocal --process --num 2`, 一个进程调度，两个进程爬取
+* 注意此模式下`queue`不能指定`process`
