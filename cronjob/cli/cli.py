@@ -39,13 +39,13 @@ def main():
 
 @main.command()
 @click.option(
-    '--mode', '-m', default='thread', help="distributed, thread or process.")
-@click.option('--node', help="If distributed mode, run master or worker.")
+    '--mode', '-m', default='thread', help="Distributed, use thread or process.")
+@click.option('--node', help="If distributed mode used, can only use master or worker.")
 @click.option('--num', '-n', default=1, help="The number of workers.")
 def run(mode, node, num):
     if mode == 'distributed':
         if node is None:
-            raise ValueError("If distributed mode, run master or worker.")
+            raise ValueError("If distributed mode used, can only use master or worker.")
         click.echo('Use distributed mode.')
         run_with_distributed(node)
     elif mode in ['thread', 'process']:
@@ -80,7 +80,7 @@ def run_with_local(mode, num):
         engine = Engine.from_settings()
         engine.run_local(worker_num=num)
     else:
-        raise 'In local mode, can only use thread or process option.'
+        raise ValueError('In local mode, can only use thread or process option.')
 
 
 @main.command()
