@@ -47,3 +47,5 @@ RETRY_HTTP_CODE = [429]
 
 # 是否需要更换user agent
 ENABLE_REPLACE_USER_AGENT = True
+
+GLOBAL_EXCEPTION_HANDLER = 'cronjob.utils.tools.global_exception_handler'
