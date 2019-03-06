@@ -7,6 +7,7 @@ import gevent
 
 from cronjob.core.scheduler import Scheduler
 from cronjob.core.worker import Worker
+from cronjob.utils.utils import capture_greenlet_exc
 
 LOGGER = logging.getLogger(__name__)
 
@@ -31,6 +32,7 @@ class Engine:
         LOGGER.info('worker start...')
         gevent.signal(signal.SIGQUIT, gevent.kill)
         self.worker.start()
+        self.worker.link_exception(capture_greenlet_exc)
         self.worker.join()
 
     def run_local(self, process=False, worker_num=1) -> None:

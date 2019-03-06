@@ -6,6 +6,7 @@ from gevent.queue import Empty
 
 from cronjob.tasks import task_queue
 from cronjob.tasks.tasks import ProducerTask
+from cronjob.utils.utils import capture_greenlet_exc
 
 LOGGER = logging.getLogger(__name__)
 
@@ -25,7 +26,8 @@ class Worker(Greenlet):
         while True:
             try:
                 obj = task_queue.get(timeout=3)
-                gevent.spawn(obj.run)
+                g = gevent.spawn(obj.run)
+                g.link_exception(capture_greenlet_exc)
             except Empty:
                 pass
             except Exception as err:
