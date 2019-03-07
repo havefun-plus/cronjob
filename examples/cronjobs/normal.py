@@ -8,7 +8,7 @@ from cronjob.events import pre_action, receiver
 class NormalJob(BaseJob):
     #  设置执行时间, 语法参考[Cron](https://en.wikipedia.org/wiki/Cron)
     rule = '* * * * *'  # 每隔一分钟执行一次
-
+    # rule = [3600, 5400] # 每隔一个小时~一个半小时执行一次
     # rule = '1,31 * * * *'  # 每小时钟的第1和第15分钟执行一次
     # rule = '1,31 10-20 */3  *  *' # 每隔三天的10点到20点第1和第31分钟执行一次
 

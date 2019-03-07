@@ -1,7 +1,6 @@
 import operator
 
 import pytest
-
 from cronjob.utils.rule import CronRule
 from cronjob.utils.user_agents import replace_user_agent
 
@@ -20,6 +19,9 @@ def test_cronrule():
         ('1h3s', operator.eq, 3603),
         ('2m3s', operator.eq, 123),
         ('*/5 * * * *', operator.gt, 0),
+        ('*/5 * * * *', operator.lt, 361),
+        ([3600, 5400], operator.gt, 3600),
+        ([3600, 5400], operator.lt, 5400),
     ]
     for condition, op, result in tests:
         cr = CronRule(condition)
