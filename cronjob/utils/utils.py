@@ -2,7 +2,6 @@ import logging
 import sys
 
 import arrow
-
 from cronjob.settings import settings
 from cronjob.utils.loaders import load_object
 

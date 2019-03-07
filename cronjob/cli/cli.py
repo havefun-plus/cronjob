@@ -5,11 +5,10 @@ import sys
 from functools import wraps
 
 import click
-from redis.exceptions import ConnectionError
-
 from cronjob import __version__ as version
 from cronjob.core.engine import Engine
 from cronjob.settings import settings
+from redis.exceptions import ConnectionError
 
 
 def cli_decorator(code=0):

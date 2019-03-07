@@ -10,6 +10,7 @@ class BaiduSpider(SpiderJob):
     # rule = '1m3s'  # 每隔1分3秒执行一次
     # rule = '1h5s'  # 每隔1小时5秒执行一次
     # rule = '2h1m3s'  # 每隔2小时1分3秒执行一次
+    # rule = [3600, 5400] # 每隔一个小时~一个半小时执行一次
 
     def run(self):
         """

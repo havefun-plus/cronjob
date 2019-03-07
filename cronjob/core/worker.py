@@ -1,12 +1,11 @@
 import logging
 
 import gevent
-from gevent import Greenlet
-from gevent.queue import Empty
-
 from cronjob.tasks import task_queue
 from cronjob.tasks.tasks import ProducerTask
 from cronjob.utils.utils import capture_greenlet_exc
+from gevent import Greenlet
+from gevent.queue import Empty
 
 LOGGER = logging.getLogger(__name__)
 

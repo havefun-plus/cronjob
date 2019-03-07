@@ -4,7 +4,6 @@ from multiprocessing import Process
 from threading import Thread
 
 import gevent
-
 from cronjob.core.scheduler import Scheduler
 from cronjob.core.worker import Worker
 from cronjob.utils.utils import capture_greenlet_exc
