@@ -1,7 +1,6 @@
 '''sspider is a simple spider'''
-from setuptools import find_packages, setup
-
 from cronjob import __version__
+from setuptools import find_packages, setup
 
 requirements = [
     'arrow==0.13.0',

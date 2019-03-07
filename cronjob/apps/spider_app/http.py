@@ -28,12 +28,11 @@ from functools import partial
 from typing import Optional
 
 import gevent
-from requests import Response, Session
-from requests.exceptions import RequestException
-
 from cronjob.settings import settings
 from cronjob.utils.loaders import load_object
 from cronjob.utils.user_agents import replace_user_agent
+from requests import Response, Session
+from requests.exceptions import RequestException
 
 LOGGER = logging.getLogger(__name__)
 
