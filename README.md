@@ -1,77 +1,70 @@
 # cronjob 
 
-之前整个项目做简单的定时爬虫调度，之后发现不止可以调度爬虫，也可以调度其他一些小任务，所以重构了一下
+---
+
+### Overview
+
+`cronjob`是一个轻量、分布式、异步的定时任务框架，主要参考`scrapy`，`rq`，异步主要基于gevent。所有的定时任务都会在`gevent`的微线程中执行。
+
+---
 
 ### Installation
 
-当前版本`0.0.14`
+pip install cronjob
 
-```
-pip install git+https://github.com/havefun-plus/cronjob.git@0.0.14
-```
+pip install git+https://github.com/havefun-plus/cronjob.git
+
+
+
+---
 
 ### Usage
 
-参考`examples`
+#### 1. settings
 
-### TODO
+通过环境变量`CRONJOB_SETTINGS`指定配置文件, 配置见`settings.example.py`
 
-1. spider模板
-2. 监控
-3. proxy
+* 通过`CRONJOBS_MODULE = 'cronjobs'`指定定时任务所在路径
+* 通过`QUEUE_CONFIG = dict(queue_type='thread', config=None)`指定使用在什么模式运行
+    * 指定redis，同时要指定redis配置
+    * 指定thread，只能在单节点运行
+    
+参考： https://github.com/havefun-plus/ip-proxy-pool/blob/master/ipfeeder/settings.py
+    
+#### 2. 创建定时任务
 
+参考：
 
-----
-以下是重构之前的文档
----
+* https://github.com/havefun-plus/ip-proxy-pool/blob/master/ipfeeder/cronjobs
 
-# sspider
+* https://github.com/havefun-plus/cronjob/tree/master/examples
 
-### Precondition
+#### 3. 执行
 
-现在公司爬虫平台基于scrapy和scrapyd构建，使用过程中的痛点主要有：
+单节点运行：
 
-1. 众所周知scrapy不支持分布式，分布主要使用scrapyd, 每个爬虫有一点变化都要重新打包上传，扔给调度平台进行调度, 太麻烦了
-2. 公司业务大多是爬取特定的页面，文件等，并没有爬取整个站点的需求，用scrapy感觉偏重了
-3. 在这个系统上面进行定制扩展并不简单，比如如果我需要接收信息爬取特定的页面，在这个系统几乎很难实现，实现了也很丑
+* `cronjob run`  默认一个线程调度任务，一个线程爬取
+* `cronjob run --mode thread --num 2`  启动两个线程执行   
 
-### 实现
+多节点运行：
 
-基于以上痛点，想写一个自己想要的爬虫平台。
+注意只能增加`worker`实例，`master`实例只能为1
 
-在项目还没有写一行代码的时候，基于本人幻想，应该有以下特点：
+参考：
 
-1. 易于定制
-2. 分布式
-3. 简单
+* https://github.com/havefun-plus/ip-proxy-pool/blob/master/deploy/master.sh
 
-当然，基于本人目前仍是菜鸟中的菜鸟的技术水平，这个项目目前仍是学习折腾性质。
-
-项目将主要参(chao)考(xi)：
-
-1. Scrapy(不可否认scrapy的设计真的太帅了)
-2. Django
-3. rq(简单易用)
-
-项目主要基于：
-
-1. gevent
-2. requests
-
-### Architecture
-
-主从架构，之间利用redis进行通信(参考`rq`)
-
-#### 主节点
-
-1. 任务注册
-2. 任务调度
-3. 任务统计，监控
-
-#### 从节点
-
-1. 争抢任务
-2. 实例化任务
+* https://github.com/havefun-plus/ip-proxy-pool/blob/master/deploy/worker.sh
 
 ---
+
+### 项目参考:
+
+eat your own dog food
+
+基于`cronjob`实现的项目：
+
+IP代理池
+
+* https://github.com/havefun-plus/ip-proxy-pool
 

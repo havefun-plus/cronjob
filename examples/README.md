@@ -1,56 +1,55 @@
-### 一、配置文件
+# cronjob 
 
-目前需要在项目根目录`export PYTHONPATH=.`
+之前整个项目做简单的定时爬虫调度，之后发现不止可以调度爬虫，也可以调度其他一些小任务，所以重构了一下
 
-通过环境变量`CRONJOB_SETTINGS`指定配置文件, 配置见`settings.example.py`, 也可不指定使用默认配置
+### Installation
 
-### 二、定时任务脚本
+pip install cronjob
 
-所有定时任务默认放在工程根目录下的`cronjobs`文件夹, 或者通过配置`CRONJOBS_MODULE`指定
+pip install git+https://github.com/havefun-plus/cronjob.git
 
-#### 2.1 通用任务举例
+### Usage
 
-1. 使用类
+#### 1. settings
 
-参考`examples/cronjobs/normal.py`
+通过环境变量`CRONJOB_SETTINGS`指定配置文件, 配置见`settings.example.py`
 
-2. 使用装饰器
+* 通过`CRONJOBS_MODULE = 'cronjobs'`指定定时任务所在路径
+* 通过`QUEUE_CONFIG = dict(queue_type='thread', config=None)`指定使用在什么模式运行
+    * 指定redis，同时要指定redis配置
+    * 指定thread，只能在单节点运行
+    
+参考： https://github.com/havefun-plus/ip-proxy-pool/blob/master/ipfeeder/settings.py
+    
+#### 2. 创建定时任务
 
-参考`examples/cronjobs/normal_func.py`
+参考：
 
-#### 2.2 以定时爬虫脚本举例
+* https://github.com/havefun-plus/ip-proxy-pool/blob/master/ipfeeder/cronjobs/spiders/data5u.py
 
-参考`examples/cronjobs/baidu.py`
+* https://github.com/havefun-plus/cronjob
 
-代理配置参考`examples/cronjobs/proxy.py`
+#### 3. 执行
 
-
-### 三、启动
-
-#### 3.1 主从运行
-
-* 启动主节点: `cronjob run --mode distributed --node master`
-* 启动从节点: `cronjob run --mode distributed --node worker`
-
-* 注意主从运行下`queue`不能指定`thread`或者`process`
-
-#### 3.2 单节点运行
-
-默认线程模式：
+单节点运行：
 
 * `cronjob run`  默认一个线程调度任务，一个线程爬取
 * `cronjob run --mode thread --num 2`  启动两个线程执行   
 
+多节点运行：
 
-进程模式:
+注意只能增加`worker`实例，`master`实例只能为1
 
-mac下可能需要`export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES`
+参考：
 
-* `cronjob run --mode process`, 一个进程调度，默认一个进程爬取
+* https://github.com/havefun-plus/ip-proxy- pool/blob/master/deploy/master.sh
 
-* 注意此模式下`queue`不能指定`thread`
+* https://github.com/havefun-plus/ip-proxy-
+pool/blob/master/deploy/worker.sh
 
-可以加worker:
 
-* `cronjob run --mode process --num 2`, 一个进程调度，两个进程爬取
-* 注意此模式下`queue`不能指定`process`
+### 项目参考:
+
+* https://github.com/havefun-plus/cronjob/tree/master/examples
+
+

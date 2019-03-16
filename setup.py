@@ -1,4 +1,4 @@
-'''sspider is a simple spider'''
+'''A simple distributed `cron job` framework'''
 from cronjob import __version__
 from setuptools import find_packages, setup
 
@@ -14,7 +14,7 @@ requirements = [
 setup(
     name='cronjob',
     version=__version__,
-    url='https://github.com/fucangyu/cronjob/',
+    url='https://github.com/havefun-plus/cronjob',
     license='MIT',
     author='fucangyu',
     author_email='cangyufu@gmail.com',
