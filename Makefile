@@ -12,3 +12,7 @@ test:
 	PYTHONPATH=. pytest -s -vvvv --cov sspider --cov tests --cov-report term-missing --cov-report xml:cobertura.xml --junitxml=testresult.xml .
 
 
+release:
+	python setup.py check
+	python setup.py sdist
+	python setup.py register sdist upload

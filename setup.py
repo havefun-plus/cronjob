@@ -1,4 +1,4 @@
-'''sspider is a simple spider'''
+'''A simple distributed `cron job` framework'''
 from cronjob import __version__
 from setuptools import find_packages, setup
 
