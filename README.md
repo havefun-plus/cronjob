@@ -4,10 +4,7 @@
 
 ### Installation
 
-当前版本`0.0.14`
-
-```
-pip install git+https://github.com/havefun-plus/cronjob.git@0.0.14
+pip install git+https://github.com/havefun-plus/cronjob.git@0.0.16
 ```
 
 ### Usage
