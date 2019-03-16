@@ -1,7 +1,5 @@
 # cronjob 
 
-之前整个项目做简单的定时爬虫调度，之后发现不止可以调度爬虫，也可以调度其他一些小任务，所以重构了一下
-
 ### Installation
 
 pip install git+https://github.com/havefun-plus/cronjob.git@0.0.17

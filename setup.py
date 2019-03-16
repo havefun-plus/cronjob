@@ -14,7 +14,7 @@ requirements = [
 setup(
     name='cronjob',
     version=__version__,
-    url='https://github.com/fucangyu/cronjob/',
+    url='https://github.com/havefun-plus/cronjob',
     license='MIT',
     author='fucangyu',
     author_email='cangyufu@gmail.com',
