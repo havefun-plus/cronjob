@@ -4,7 +4,7 @@
 
 ### Installation
 
-pip install git+https://github.com/havefun-plus/cronjob.git@0.0.16
+pip install git+https://github.com/havefun-plus/cronjob.git@0.0.17
 ```
 
 ### Usage
