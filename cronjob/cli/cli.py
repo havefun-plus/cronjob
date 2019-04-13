@@ -69,7 +69,7 @@ def run_with_distributed(node):
 
 def run_with_local(mode, num):
     msg = (f'Cli command option --mode=={mode} cat not match settings '
-            'file, please change QUEUE_CONFIG in settings file.')
+           'file, please change QUEUE_CONFIG in settings file.')
     if mode == 'process':
         assert settings.QUEUE_CONFIG['queue_type'] == 'process', msg
         engine = Engine.from_settings()

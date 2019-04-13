@@ -10,7 +10,7 @@ from .exceptions import DequeueTimeout
 class LocalQueue(BaseQueue):
     def __init__(self, config: dict, queue) -> None:
         super().__init__(config)
-        self.queue = queue 
+        self.queue = queue
 
     def set_qname(self, qname: str) -> 'BaseQueue':
         pass
@@ -30,7 +30,8 @@ class ThreadQueue(LocalQueue):
 
     def __init__(self, config: dict, queue=TQueue()) -> None:
         super().__init__(config, queue)
-    
+
+
 class ProcessQueue(LocalQueue):
     queue_type = 'process'
 

@@ -70,6 +70,7 @@ def request(method: str, url: str, **kwargs) -> Optional[Response]:
             LOGGER.warn(f'Retry {i} times, timeout')
         except RequestException as err:
             LOGGER.warn(f'Retry {i} times, error:{err}')
+    return None
 
 
 get = partial(request, 'GET')

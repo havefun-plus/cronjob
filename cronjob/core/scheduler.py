@@ -3,6 +3,7 @@ import sched
 import time
 from typing import Callable
 
+from cronjob.apps import JobMeta
 from cronjob.core.registry import Registry
 from cronjob.queues import get_queue_client
 from cronjob.settings import settings
@@ -22,8 +23,8 @@ class Scheduler:
         queue.set_qname(settings.JOB_QUEUE_NAME)
         return cls(registry=Registry.from_settings(), queue=queue)
 
-    def periodic(self, func: Callable[['BaseJob'], None],
-                 job_cls: 'BaseJob') -> None:
+    def periodic(self, func: Callable[[JobMeta], None],
+                 job_cls: JobMeta) -> None:
         if not job_cls.cancelled:
             interval = job_cls.interval
             self._scheduler.enter(
@@ -43,7 +44,7 @@ class Scheduler:
             job_cls = self.registry[job_rk]
             self.periodic(self.schedule, job_cls)
 
-    def schedule(self, job_cls: 'BaseJob') -> None:
+    def schedule(self, job_cls: JobMeta) -> None:
         LOGGER.info(f'schedule {job_cls.__name__}')
         # TODO handle enqueue failed
         self.queue.put(job_cls.register_key.encode())

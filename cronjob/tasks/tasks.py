@@ -1,7 +1,9 @@
 import logging
 
+import gevent
+from cronjob.apps import JobMeta
 from cronjob.core.registry import Registry
-from cronjob.queues import DequeueTimeout, get_queue_client
+from cronjob.queues import BaseQueue, DequeueTimeout, get_queue_client
 from cronjob.settings import settings
 from cronjob.tasks import BaseTask, task_queue
 
@@ -13,7 +15,7 @@ class NormalTask(BaseTask):
     这个类是对job的封装
     """
 
-    def __init__(self, job_cls: 'BaseJob') -> None:
+    def __init__(self, job_cls: JobMeta) -> None:
         self.job_cls = job_cls
 
     def run(self) -> None:
@@ -29,8 +31,8 @@ class ProducerTask(BaseTask):
 
     def __init__(
             self,
-            msg_queue: 'cronjob.queues.BaseQueue',
-            task_queue: 'gevent.queue.Queue',
+            msg_queue: BaseQueue,
+            task_queue: gevent.queue.Queue,
             registry: 'Registry',
     ) -> None:
         self.msg_queue = msg_queue

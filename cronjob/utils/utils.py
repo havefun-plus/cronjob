@@ -14,7 +14,6 @@ except Exception:
     from cronjob.utils.tools import global_exception_handler
 
 
-
 class Formatter(logging.Formatter):
     def formatTime(self, record, datefmt=None):
         time = arrow.get(record.created)

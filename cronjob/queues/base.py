@@ -1,8 +1,10 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any, AnyStr
+from typing import Any
+
+from cronjob.types import BASE_QUEUE
 
 
-class BaseMessage(metaclass=ABCMeta):
+class BaseMessage(BASE_QUEUE, metaclass=ABCMeta):
     """
     封装不同的消息队列消息，以提供统一的接口, 目前没用
     """
@@ -33,5 +35,5 @@ class BaseQueue(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get(self, timeout: float = 3.0) -> AnyStr:
+    def get(self, timeout: float = 3.0) -> str:
         pass

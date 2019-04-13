@@ -1,5 +1,4 @@
 import logging
-from typing import AnyStr
 
 from redis import StrictRedis
 from redis.exceptions import WatchError
@@ -17,7 +16,7 @@ class RedisQueue(BaseQueue):
         super().__init__(config)
         self.connection = StrictRedis(**self.config)
 
-    def set_qname(self, qname: str) -> 'ReidsQueue':
+    def set_qname(self, qname: str) -> 'RedisQueue':
         self.qname = qname
         return self
 
@@ -36,10 +35,10 @@ class RedisQueue(BaseQueue):
             LOGGER.error(f'watch error queue name: {qname}')
             return False
 
-    def get(self, timeout: float = 3) -> AnyStr:
+    def get(self, timeout: float = 3) -> str:
         return self._get(self.qname, timeout)
 
-    def _get(self, qname: str, timeout: float = 3) -> AnyStr:
+    def _get(self, qname: str, timeout: float = 3) -> str:
         msg = self.connection.blpop(
             self.qname,
             timeout=timeout,

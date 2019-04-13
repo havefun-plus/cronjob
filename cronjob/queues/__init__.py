@@ -9,7 +9,7 @@ registry = {
     if klass and hasattr(klass, 'queue_type')
 }
 
-__all__ = ['get_queue_client', 'DequeueTimeout']
+__all__ = ['get_queue_client', 'DequeueTimeout', 'BaseQueue']
 
 
 def get_queue_client(config: dict) -> BaseQueue:
