@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 requirements = [
     'arrow==0.13.0',
     'Click==7.0',
-    'croniter==0.3.26',
+    'croniter>=0.3.26',
     'gevent==1.4.0',
     'redis==3.0.1',
     'requests==2.21.0',
