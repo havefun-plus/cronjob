@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import List
 
 
 class ProxyError(Exception):
@@ -7,9 +7,9 @@ class ProxyError(Exception):
 
 class BaseProxy:
     def __init__(self) -> None:
-        self.proxies = []
+        self.proxies: List[str] = []
 
-    def get_proxy_ips(self) -> Iterable[str]:
+    def get_proxy_ips(self) -> List[str]:
         raise NotImplementedError
 
     def get(self) -> str:

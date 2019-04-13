@@ -46,7 +46,7 @@ LOGGING_SETTINGS = dict(
     loggers={
         'cronjob': {
             'handlers': ['stdout'],
-            'level': settings.LOG_LEVEL,
+            'level': 'INFO',
         },
         'BaseJob': {
             'handlers': ['basecls'],

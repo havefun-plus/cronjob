@@ -12,7 +12,7 @@ LOGGER = logging.getLogger(__name__)
 
 class Worker(Greenlet):
     """
-    worker会不停干的从task_queue中取task(cronjob.tasks.BaseTask)执行 
+    worker会不停干的从task_queue中取task(cronjob.tasks.BaseTask)执行
     """
 
     def __init__(self, n=0) -> None:

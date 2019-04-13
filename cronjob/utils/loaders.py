@@ -2,7 +2,7 @@ import inspect
 from importlib import import_module
 from pkgutil import iter_modules
 from types import ModuleType
-from typing import Generator, Iterable, Type
+from typing import Any, Generator, Iterable
 
 
 """
@@ -18,7 +18,8 @@ def get_all_target_cls(module_path: str, target_cls: type) -> Generator:
         yield from iter_target_classes(module, target_cls)
 
 
-def iter_target_classes(module: ModuleType, target_cls: type) -> Type:
+def iter_target_classes(module: ModuleType,
+                        target_cls: type) -> Generator[Any, None, None]:
 
     for obj in vars(module).values():
         if inspect.isclass(obj) and \

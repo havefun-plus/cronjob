@@ -1,9 +1,9 @@
 import logging
 from collections import OrderedDict
 from operator import attrgetter
-from typing import AnyStr, Iterable
+from typing import AnyStr, Iterable, Optional
 
-from cronjob.apps import BaseJob
+from cronjob.apps import BaseJob, JobMeta
 from cronjob.settings import settings
 from cronjob.utils.loaders import get_all_target_cls
 
@@ -14,7 +14,7 @@ class Registry:
     """
     所有的Job都注册在这里，是一个单例类，也只初始化一次
     """
-    _instance = None
+    _instance: Optional['Registry'] = None
 
     def __new__(cls, *args, **kwargs) -> 'Registry':
         if cls._instance is None:
@@ -23,11 +23,12 @@ class Registry:
         return cls._instance
 
     def __init__(self, module: str) -> None:
+        self._initialized: bool
         if self._initialized:
             return
         self._initialized = True
         self.module = module
-        self._jobs = OrderedDict()
+        self._jobs: dict = OrderedDict()
         self.init_jobs()
 
     @classmethod
@@ -55,10 +56,9 @@ class Registry:
         for job_cls in klasses:
             self._jobs[job_cls.register_key] = job_cls
 
-    def __getitem__(self, job_rk: AnyStr) -> 'BaseJob':
-        if isinstance(job_rk, bytes):
-            job_rk = job_rk.decode()
-        return self._jobs[job_rk]
+    def __getitem__(self, job_rk: AnyStr) -> JobMeta:
+        rk = job_rk.decode() if isinstance(job_rk, bytes) else job_rk
+        return self._jobs[rk]
 
     def __contains__(self, job_rk: str) -> bool:
         return job_rk in self._jobs

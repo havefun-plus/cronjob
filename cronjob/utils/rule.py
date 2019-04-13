@@ -1,6 +1,7 @@
 import random
 import re
 from datetime import datetime
+from typing import Union
 
 from croniter import croniter
 
@@ -20,7 +21,7 @@ class ConstParser:
                 result += flags[i] * nums.pop()
         return result
 
-    def is_valid(self) -> True:
+    def is_valid(self) -> bool:
         try:
             result = self.parse_hms()
             if isinstance(result, int):
@@ -36,7 +37,7 @@ class ConstParser:
 
 
 class RandomParser:
-    def __init__(self, rule: (tuple, list)) -> None:
+    def __init__(self, rule: Union[tuple, list]) -> None:
         self.rule = rule
 
     def is_valid(self) -> bool:

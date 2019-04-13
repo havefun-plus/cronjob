@@ -1,7 +1,7 @@
 import logging
 import types
 from functools import partial
-from typing import Callable
+from typing import Any, Callable, List
 
 from .actions import Action
 
@@ -15,7 +15,7 @@ class Event(list):
         self.partents = parents
 
     def __call__(self) -> None:
-        actions = []
+        actions: List['Event'] = []
         for item in self.partents:
             more = getattr(item, self.name)
             if more:
@@ -29,9 +29,9 @@ class Event(list):
 
 
 class receiver:  # noqa
-    def __init__(self, action: Action, sender: 'BaseJob', **kwargs) -> None:
+    def __init__(self, action: Action, sender: Any, **kwargs) -> None:
         if isinstance(sender, types.FunctionType):
-            self.sender = sender.cronjob_cls
+            self.sender = sender.cronjob_cls  # type: ignore
         else:
             self.sender = sender
         self.action = action
